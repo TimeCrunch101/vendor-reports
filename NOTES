@@ -1,0 +1,50 @@
+FROM Bookmanager
+    Sold
+    aOH
+    aOO
+    Price
+    Title
+    Author
+    Cat === PLANT
+    Cat2
+    Supl = Supplyer/vendor
+    TtlRcv
+    Rtn
+    ISBN
+
+Sam's Vendor Reports
+
+    Vendor Name
+    Item Name
+    Gross Sale
+    Consignment
+    Units Sold
+    Net Sales
+
+    Vendor Name
+    Item Name
+    Price
+    Sept Total
+    September End
+
+
+
+
+DATABASE
+    Vendors Table
+
+    Inventory Table
+
+    Users Table
+        id
+        username
+        first_name
+        last_name
+        full_name
+        email
+        password
+
+    EOM Table
+
+    9 - x = 5
+    9 - 4 = 5
