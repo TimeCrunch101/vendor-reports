@@ -1,0 +1,15 @@
+{
+    "azure_saas_token_expiration": {
+        "value": 604800000,
+        "description": "168 hours from issue date is when the token will expire."
+    },
+    "api_limits": {
+        "window_ms": 300000,
+        "description": "this is 5 * 60 * 1000",
+        "max": 700
+    },
+    "jwt_expire_time": {
+        "value": "8h",
+        "description": "This is when the JWT will expire"
+    }
+}

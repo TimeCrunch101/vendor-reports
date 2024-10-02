@@ -1,0 +1,36 @@
+{
+  "name": "vendor-reports",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "api": "nodemon ./server/main.js",
+    "vue": "cd client && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimeCrunch101/vendor-reports.git"
+  },
+  "keywords": [
+    "Vendor Reports"
+  ],
+  "author": "Aaron Allen",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/TimeCrunch101/vendor-reports/issues"
+  },
+  "homepage": "https://github.com/TimeCrunch101/vendor-reports#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "express-rate-limit": "^7.4.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.3",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.7"
+  }
+}
