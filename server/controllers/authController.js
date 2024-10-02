@@ -56,7 +56,7 @@ exports.createJWT = (user) => {
     return new Promise((resolve, reject) => {
         try {
             const token = jwt.sign({
-                id: user.user_id,
+                id: user.id,
                 first_name: user.first_name,
                 last_name: user.last_name,
                 full_name: user.full_name,
@@ -104,4 +104,13 @@ exports.isNotAuthenticated = (req, res, next) => {
     } catch (error) {
       next();
     }
+  };
+
+// getRouter.get("/api/validate", auth.isAuthenticated, auth.validate);
+// On protected routes in the Vue application, a validation check is preformed.
+// If auth.isAuthenticated succeeds then this will be called.
+exports.validate = (req, res) => {
+    res.status(200).json({
+      validation: true,
+    });
   };

@@ -38,10 +38,10 @@ exports.register = (user) => {
 
 exports.checkIfEmailExists = (email) => {
     return new Promise((resolve, reject) => {
-        DB.query("SELECT email FROM users WHERE email = ?",[email], (err, email) => {
+        DB.query("SELECT email FROM users WHERE email = ?",[email], (err, emailFromDb) => {
             try {
                 if (err) throw new Error("Could not fetch Email.", {cause: err.message})
-                if (email.length > 0) throw new Error("That email is already registered")
+                if (emailFromDb.length > 0) throw new Error("That email is already registered")
                 resolve(true)
             } catch (error) {
                 reject(error)

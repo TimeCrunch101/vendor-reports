@@ -6,6 +6,7 @@ const getRouter = express.Router();
 const initGetRouter = (app) => {
 
   getRouter.get("/api/v1/secret", auth.isAuthenticated ,getController.secretRouteTest)
+  getRouter.get("/api/v1/validate", auth.isAuthenticated , auth.validate)
 
   return app.use("/", getRouter);
 };

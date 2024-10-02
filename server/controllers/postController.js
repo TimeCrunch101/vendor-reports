@@ -43,7 +43,7 @@ exports.login = async (req, res) => {
             last_name: userFromDB.last_name,
             full_name: userFromDB.full_name,
             email: userFromDB.email,
-            jwt: token,
+            token: token,
         })
     } catch (error) {
         console.error(error)
