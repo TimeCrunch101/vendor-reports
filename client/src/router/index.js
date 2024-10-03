@@ -19,6 +19,16 @@ const router = createRouter({
       name: 'Register',
       component: () => import('../views/AUTH/Register.vue')
     },
+    {
+      path: '/vendors',
+      name: 'Vendors',
+      component: () => import('../views/Vendors.vue')
+    },
+    {
+      path: '/vendor/:id',
+      name: 'Vendor',
+      component: () => import('../views/Vendor.vue')
+    },
   ]
 })
 
