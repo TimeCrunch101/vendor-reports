@@ -68,3 +68,55 @@ exports.getUserByEmail = (email) => {
         })
     })
 }
+
+/**
+ * @param {Object} vendor 
+ * @param {String} vendor.name
+ * @param {String} vendor.consignment
+ * @param {String} vendor.bm_ven_code
+ */
+
+exports.addVendor = (vendor) => {
+    return new Promise((resolve, reject) => {
+        DB.query("INSERT INTO vendors SET ?", {
+            id: uuidv4(),
+            poc: null,
+            name: vendor.name,
+            consignment: vendor.consignment,
+            bm_ven_code: vendor.bm_ven_code
+        }, (err, res) => {
+            try {
+                if (err) throw err;
+                resolve(res)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+exports.getVendors = () => {
+    return new Promise((resolve, reject) => {
+        DB.query("SELECT * FROM vendors", (err, vendors) => {
+            try {
+                if (err) throw err;
+                resolve(vendors)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+exports.deleteVendor = (id) => {
+    return new Promise((resolve, reject) => {
+        DB.query("DELETE FROM vendors WHERE id = ?", [id], (err, res) => {
+            try {
+                if (err) throw err;
+                resolve(res)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}

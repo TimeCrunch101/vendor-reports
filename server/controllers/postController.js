@@ -53,3 +53,33 @@ exports.login = async (req, res) => {
         })
     }
 }
+
+exports.addVendor = async (req, res) => {
+    try {
+        const dbRes = await DB.addVendor(req.body)
+        console.log(dbRes)
+        res.status(200).json({
+            dbRes: dbRes
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}
+
+exports.deleteVendor = async (req, res) => {
+    try {
+        const dbRes = await DB.deleteVendor(req.params.id)
+        res.status(200).json({
+            dbRes: dbRes
+        })
+    } catch (error) {
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}
