@@ -194,6 +194,7 @@ exports.getAllItems = () => {
             FROM
                 items
                 LEFT JOIN vendors ON items.vendor = vendors.id
+                ORDER BY vendors.name ASC
             `,[],(err, res) => {
                 try {
                     if (err) throw err;
