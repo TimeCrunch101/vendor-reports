@@ -51,7 +51,7 @@ onMounted(() => {
     <button class="nav-link" id="item-list" data-bs-toggle="tab" data-bs-target="#item-list-pane" type="button" role="tab" aria-controls="item-list-pane" aria-selected="false">Inventory</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="history" data-bs-toggle="tab" data-bs-target="#history-pane" type="button" role="tab" aria-controls="history-pane" aria-selected="false">History</button>
+    <button class="nav-link" id="reports" data-bs-toggle="tab" data-bs-target="#reports-pane" type="button" role="tab" aria-controls="reports-pane" aria-selected="false">Reports</button>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
@@ -61,7 +61,7 @@ onMounted(() => {
   <div class="tab-pane fade" id="item-list-pane" role="tabpanel" aria-labelledby="item-list" tabindex="0">
     <VendorItemList/>
   </div>
-  <div class="tab-pane fade" id="history-pane" role="tabpanel" aria-labelledby="history" tabindex="0">
+  <div class="tab-pane fade" id="reports-pane" role="tabpanel" aria-labelledby="reports" tabindex="0">
     
   </div>
 </div>

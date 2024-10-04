@@ -93,6 +93,21 @@ onMounted(() => {
                             <span class="placeholder col-12"></span>
                         </p>
                     </td>
+                    <td>
+                        <p class="placeholder-glow">
+                            <span class="placeholder col-12"></span>
+                        </p>
+                    </td>
+                    <td>
+                        <p class="placeholder-glow">
+                            <span class="placeholder col-12"></span>
+                        </p>
+                    </td>
+                    <td>
+                        <p class="placeholder-glow">
+                            <span class="placeholder col-12"></span>
+                        </p>
+                    </td>
                     
                 </tr>
             </tbody>
