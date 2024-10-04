@@ -64,3 +64,28 @@ exports.getAllItems = async (req, res) => {
         })
     }
 }
+
+exports.getChartData = async (req, res) => {
+    try {
+        let vendorNames = []
+        let totalItems = []
+        const vendors = await DB.getChartData1()
+        for await (const ven of vendors) {
+            const itemCount = await DB.getChartData2(ven.id)
+            vendorNames.push({
+                vendor: ven.name,
+                items: itemCount
+            })
+            itemCount.push
+        }
+        res.status(200).json({
+            chartData: chartData
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}

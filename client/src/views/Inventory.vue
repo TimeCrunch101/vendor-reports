@@ -63,7 +63,7 @@ onMounted(() => {
             <tbody v-if="loading === false">
                 <tr v-for="item in items">
                     <td>{{ item.item_name }}</td>
-                    <td>{{ item.price }}</td>
+                    <td>${{ item.price }}</td>
                     <td>{{ item.qty }}</td>
                     <td><router-link :to="`/vendor/${item.vendor_id}`">{{ item.vendor_name }}</router-link></td>
                     <td>{{ item.consignment }}</td>

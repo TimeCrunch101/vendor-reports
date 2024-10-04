@@ -11,6 +11,7 @@ const initGetRouter = (app) => {
   getRouter.get("/api/v1/get/vendor/:id", auth.isAuthenticated , getController.getVendor)
   getRouter.get("/api/v1/get/items-by-vendor/:id", auth.isAuthenticated , getController.getItemsByVendor)
   getRouter.get("/api/v1/get/items", auth.isAuthenticated , getController.getAllItems)
+  getRouter.get("/api/v1/get/chart-data", getController.getChartData) // TODO: ADD AUTH
 
   return app.use("/", getRouter);
 };
