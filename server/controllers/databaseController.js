@@ -178,3 +178,29 @@ exports.deleteItem = (id) => {
         })
     })
 }
+
+exports.getAllItems = () => {
+    return new Promise((resolve, reject) => {
+        DB.query(`
+            SELECT
+                items.id,
+                items.item_name,
+                items.price,
+                items.qty,
+                vendors.id AS vendor_id,
+                vendors.name AS vendor_name,
+                vendors.consignment,
+                vendors.bm_ven_code
+            FROM
+                items
+                LEFT JOIN vendors ON items.vendor = vendors.id
+            `,[],(err, res) => {
+                try {
+                    if (err) throw err;
+                    resolve(res)
+                } catch (error) {
+                    reject(error)
+                }
+            })
+    })
+}

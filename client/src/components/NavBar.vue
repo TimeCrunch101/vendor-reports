@@ -28,7 +28,10 @@ const logout = () => {
           <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link active" aria-current="page" to="/vendors">Vendors</router-link>
+          <router-link class="nav-link" aria-current="page" to="/vendors">Vendors</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" aria-current="page" to="/inventory">Inventory</router-link>
         </li>
         <li class="nav-item">
           <router-link @click="logout()" class="nav-link" to="/login">Logout <i class="bi bi-box-arrow-right"></i></router-link>

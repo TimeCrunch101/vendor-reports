@@ -49,3 +49,18 @@ exports.getItemsByVendor = async (req, res) => {
         })
     }
 }
+
+exports.getAllItems = async (req, res) => {
+    try {
+        const allItems = await DB.getAllItems()
+        res.status(200).json({
+            allItems: allItems
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}
