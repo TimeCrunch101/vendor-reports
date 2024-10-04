@@ -2,6 +2,7 @@
 import { useAuthStore } from '@/stores/auth';
 import { useRoute, useRouter } from 'vue-router';
 import { ref, reactive, computed } from 'vue';
+import ThemePicker from "./ThemePicker.vue"
 
 const route = useRoute()
 const auth = useAuthStore();
@@ -33,6 +34,7 @@ const logout = () => {
           <router-link @click="logout()" class="nav-link" to="/login">Logout <i class="bi bi-box-arrow-right"></i></router-link>
         </li>
       </ul>
+      <ThemePicker/>
     </div>
   </div>
 </nav>
