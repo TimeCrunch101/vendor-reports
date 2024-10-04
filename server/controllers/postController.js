@@ -77,6 +77,37 @@ exports.deleteVendor = async (req, res) => {
             dbRes: dbRes
         })
     } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}
+
+exports.addItemToVendor = async (req, res) => {
+    try {
+        const dbRes = await DB.addItemToVendor(req.params.id, req.body)
+        res.status(200).json({
+            dbRes: dbRes
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}
+
+exports.deleteItem = async (req, res) => {
+    try {
+        const dbRes = await DB.deleteItem(req.params.id)
+        res.status(200).json({
+            dbRes: dbRes
+        })
+    } catch (error) {
+        console.error(error)
         res.status(400).json({
             message: error.message,
             cause: error.cause

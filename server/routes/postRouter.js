@@ -9,6 +9,9 @@ const initPostRouter = (app) => {
     postRouter.post("/api/v1/login", auth.isNotAuthenticated, postController.login)
     postRouter.post("/api/v1/add/vendor", auth.isAuthenticated, postController.addVendor)
     postRouter.post("/api/v1/delete/vendor/:id", auth.isAuthenticated, postController.deleteVendor)
+    postRouter.post("/api/v1/add/item-to-vendor/:id", auth.isAuthenticated, postController.addItemToVendor)
+    postRouter.post("/api/v1/delete/item/:id", auth.isAuthenticated, postController.deleteItem)
+    
 
     return app.use('/', postRouter);
 }

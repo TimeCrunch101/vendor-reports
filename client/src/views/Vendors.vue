@@ -27,16 +27,18 @@ const getVendors = () => {
 }
 
 const deleteVendor = (id) => {
-    axios.post(`/api/v1/delete/vendor/${id}`,{},{
-        headers: {
-            Authorization: `Bearer ${token.value}`
-        }
-    }).then((res) => {
-        alert("Vendor Deleted")
-        getVendors()
-    }).catch((err) => {
-        console.error(err.response.data)
-    })
+    if (confirm("Are you sure you want to delete this vendor? This action can not be reversed!")) {
+        axios.post(`/api/v1/delete/vendor/${id}`,{},{
+            headers: {
+                Authorization: `Bearer ${token.value}`
+            }
+        }).then((res) => {
+            alert("Vendor Deleted")
+            getVendors()
+        }).catch((err) => {
+            console.error(err.response.data)
+        })
+    }
 }
 
 onMounted(() => {

@@ -8,6 +8,8 @@ const initGetRouter = (app) => {
   getRouter.get("/api/v1/secret", auth.isAuthenticated ,getController.secretRouteTest)
   getRouter.get("/api/v1/validate", auth.isAuthenticated , auth.validate)
   getRouter.get("/api/v1/get/vendors", auth.isAuthenticated , getController.getVendors)
+  getRouter.get("/api/v1/get/vendor/:id", auth.isAuthenticated , getController.getVendor)
+  getRouter.get("/api/v1/get/items-by-vendor/:id", auth.isAuthenticated , getController.getItemsByVendor)
 
   return app.use("/", getRouter);
 };

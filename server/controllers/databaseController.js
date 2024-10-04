@@ -120,3 +120,61 @@ exports.deleteVendor = (id) => {
         })
     })
 }
+
+exports.getVendor = (id) => {
+    return new Promise((resolve, reject) => {
+        DB.query("SELECT * FROM vendors WHERE id = ?", [id], (err, vendor) => {
+            try {
+                if (err) throw err;
+                resolve(vendor[0])
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+exports.getItemsByVendor = (id) => {
+    return new Promise((resolve, reject) => {
+        DB.query("SELECT * FROM items WHERE vendor = ?", [id], (err, itemList) => {
+            try {
+                if (err) throw err;
+                resolve(itemList)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+exports.addItemToVendor = (vendorID, item) => {
+    return new Promise((resolve, reject) => {
+        DB.query("INSERT INTO items SET ?", {
+            id: uuidv4(),
+            item_name: item.item_name,
+            price: item.price,
+            qty: item.qty,
+            vendor: vendorID
+        }, (err, res) => {
+            try {
+                if (err) throw err;
+                resolve(res)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+exports.deleteItem = (id) => {
+    return new Promise((resolve, reject) => {
+        DB.query("DELETE FROM items WHERE id = ?",[id], (err, res) => {
+            try {
+                if (err) throw err;
+                resolve(res)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
