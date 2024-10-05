@@ -113,3 +113,18 @@ exports.getChartDataVendorItemCount = async (req, res) => {
         })
     }
 }
+
+exports.getRestockFormsByVendor = async (req, res) => {
+    try {
+        const restockForms = await DB.getRestockFormsByVendor(req.params.id)
+        res.status(200).json({
+            restockForms: restockForms
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}

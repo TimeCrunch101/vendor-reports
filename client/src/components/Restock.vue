@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAuthStore } from "../stores/auth.js";
 import { useRoute } from "vue-router";
 import { ref, onMounted, reactive } from "vue";
+import RestockList from "./RestockList.vue"
 
 const auth = useAuthStore()
 const token = ref(auth.getToken)
@@ -127,7 +128,7 @@ onMounted(() => {
     </div>
 </div>
 
-
+<RestockList v-if="showForm !== true"/>
 
 
 </template>

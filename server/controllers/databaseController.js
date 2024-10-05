@@ -235,3 +235,30 @@ exports.submitRestockForm = (vendor_id, item) => {
     })
 }
 
+exports.getRestockFormsByVendor = (id) => {
+    return new Promise((resolve, reject) => {
+        DB.query(`
+            SELECT
+                restocks.id,
+                items.item_name,
+                restocks.item,
+                restocks.restock_qty,
+                restocks.date,
+                restocks.vendor_id,
+                vendors.name AS vendor_name
+            FROM
+                restocks
+                LEFT JOIN vendors ON restocks.vendor_id = vendors.id
+                LEFT JOIN items on restocks.item = items.id
+                WHERE restocks.vendor_id = ?
+                ORDER BY restocks.date ASC
+            `, [id], (err, restockForms) => {
+            try {
+                if (err) throw err;
+                resolve(restockForms)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
