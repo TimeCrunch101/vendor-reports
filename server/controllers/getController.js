@@ -67,20 +67,19 @@ exports.getAllItems = async (req, res) => {
 
 exports.getChartData = async (req, res) => {
     try {
-        let vendorNames = []
-        let totalItems = []
+        let chartData = []
         const vendors = await DB.getChartData1()
         for await (const ven of vendors) {
             const itemCount = await DB.getChartData2(ven.id)
-            vendorNames.push({
+            chartData.push({
                 vendor: ven.name,
                 items: itemCount
             })
-            itemCount.push
         }
         res.status(200).json({
             chartData: chartData
         })
+        chartData = null
     } catch (error) {
         console.error(error)
         res.status(400).json({

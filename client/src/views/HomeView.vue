@@ -3,42 +3,17 @@ import ChartComponent from "../components/ChartComponent.vue"
 import axios from "axios"
 import { ref, reactive, onMounted } from 'vue';
 
-
 const chartData = ref({
-    labels: [],
-    datasets: [
-        {
-            label: 'Items By Vendor',
-            data: [1,2,3,4,5],
-            fill: true,
-            backgroundColor: 'rgba(0, 0, 0, .5)', // Light blue fill for bars
-            borderColor: 'rgba(140, 0, 0, 1)', // Blue border for bars
-            borderColor: 'rgb(140, 0, 0)',
-            tension: 0.1
-        }
-    ]
+  labels: [],
+  datasets: [
+    {
+      label: '# of item types',
+      data: [],
+      fill: true,
+      tension: 0.1
+    }
+  ]
 });
-
-const set = reactive({
-  chartData
-})
-
-onMounted(() => {
-    axios.get("/api/v1/get/chart-data").then((res) => {
-        const data = res.data.chartData
-        data.forEach(element => {
-            set.chartData.labels.push(element.vendor)        
-        });
-        data.forEach(element => {
-                console.log(set.chartData.datasets[0].data.push(element.vendor))
-        });
-        console.log(chartData.value)
-    }).catch((err) => {
-        console.error(err)
-    })
-})
-
-
 const chartOptions = ref({
   responsive: true,
   plugins: {
@@ -46,16 +21,41 @@ const chartOptions = ref({
       position: 'top'
     },
     title: {
-      display: false,
-    //   text: 'Chart.js Line Chart'
+      display: true,
+      text: 'Items by Vendor'
     }
   }
 });
 
+const set = reactive({
+  chartData
+})
+
+const getData = () => {
+  axios.get("/api/v1/get/chart-data").then((res) => {
+      const data = res.data.chartData
+      let labels = []
+      let dataFromAPI = []
+      for (let i = 0; i < data.length; i++) {
+        const ele = data[i];
+        labels.push(ele.vendor)
+        dataFromAPI.push(ele.items)
+      }
+      set.chartData.labels = labels
+      set.chartData.datasets[0].data = dataFromAPI
+  }).catch((err) => {
+      console.error(err)
+  })
+}
+
+onMounted(() => {
+  getData()
+})
+
 </script>
 
 <template>
-  <div>
+  <div id="chart-container">
     <ChartComponent
       :chartData="chartData"
       :chartOptions="chartOptions"
@@ -63,3 +63,23 @@ const chartOptions = ref({
     />
   </div>
 </template>
+
+<style scoped>
+
+#chart-container {
+  width: 500px;
+  height: 300px;
+}
+
+.backgroundColor {
+  color: rgba(0, 255, 255, 1);
+}
+.borderColor {
+  color: rgba(255, 0, 0, 1);
+}
+.color {
+  color: #ffffff;
+}
+
+
+</style>

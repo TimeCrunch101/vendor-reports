@@ -48,7 +48,7 @@ watch(
       chartInstance.data = newData;
       chartInstance.update();
     }
-  }
+  },{deep: true}
 );
 </script>
 
@@ -57,9 +57,6 @@ watch(
 </template>
 
 <style scoped>
-canvas {
-width: 100% !important;
-height: 100% !important;
-}
+
 </style>
 

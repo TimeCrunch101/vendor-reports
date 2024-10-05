@@ -231,15 +231,3 @@ exports.getChartData2 = (id) => {
         })
     })
 }
-
-
-// vendors.forEach(vendor => {
-//     DB.query("SELECT * FROM items WHERE vendor = ?", [vendor.id], (err, items) => {
-//         if (err) throw err;
-//         data.push({
-//             vendor: vendor.name,
-//             item_length: items.length
-//         })
-//         console.log(data)
-//     })                
-// });
