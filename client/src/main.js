@@ -2,6 +2,11 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.js";
+import { Chart } from 'chart.js/auto';
+
+// Chart.defaults.backgroundColor = '#9BD0F5';
+// Chart.defaults.borderColor = '#36A2EB';
+// Chart.defaults.color = '#000';
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";

@@ -53,7 +53,7 @@ onMounted(() => {
             <thead>
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">POC</th>
+                    <!-- <th scope="col">POC</th> -->
                     <th scope="col">Consignment</th>
                     <th scope="col">Code</th>
                     <th scope="col"></th>
@@ -63,7 +63,7 @@ onMounted(() => {
                 <tr v-for="vendor in vendors">
                     <td><router-link :to="`/vendor/${vendor.id}`">{{ vendor.name }}</router-link></td>
                     <td v-if="vendor.poc !== null">{{ vendor.poc }}</td>
-                    <td v-else>No POC</td>
+                    <!-- <td v-else>No POC</td> -->
                     <td>{{ vendor.consignment }}</td>
                     <td>{{ vendor.bm_ven_code }}</td>
                     <td><i @click="deleteVendor(vendor.id)" class="bi bi-trash3-fill"></i></td>
