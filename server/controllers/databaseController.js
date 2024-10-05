@@ -206,28 +206,3 @@ exports.getAllItems = () => {
     })
 }
 
-exports.getChartData1 = () => {
-    return new Promise((resolve, reject) => {
-        DB.query("SELECT * FROM vendors",[],(err, vendors) => {
-            try {
-                if (err) throw err;
-                resolve(vendors)
-            } catch (error) {
-                reject(error)
-            }    
-        })
-    })
-}
-
-exports.getChartData2 = (id) => {
-    return new Promise((resolve, reject) => {
-        DB.query("SELECT * FROM items WHERE vendor = ?",[id],(err, items) => {
-            try {
-                if (err) throw err;
-                resolve(items.length)
-            } catch (error) {
-                reject(error)
-            }    
-        })
-    })
-}

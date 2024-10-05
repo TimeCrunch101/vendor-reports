@@ -65,21 +65,46 @@ exports.getAllItems = async (req, res) => {
     }
 }
 
-exports.getChartData = async (req, res) => {
+exports.getChartDataItemTypes = async (req, res) => {
     try {
         let chartData = []
-        const vendors = await DB.getChartData1()
+        const vendors = await DB.getVendors()
         for await (const ven of vendors) {
-            const itemCount = await DB.getChartData2(ven.id)
+            const items = await DB.getItemsByVendor(ven.id)
             chartData.push({
                 vendor: ven.name,
-                items: itemCount
+                items: items.length
             })
         }
         res.status(200).json({
             chartData: chartData
         })
         chartData = null
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}
+
+exports.getChartDataVendorItemCount = async (req, res) => {
+    try {
+        let chartData = []
+        const vendors = await DB.getVendors()
+        for (let i = 0; i < vendors.length; i++) {
+            const vendor = vendors[i];
+            const items = await DB.getItemsByVendor(vendor.id)
+            chartData.push({
+                vendor: vendor.name,
+                items: items
+            })
+        }
+        res.status(200).json({
+            chartData: chartData
+        })
+        chartData = null   
     } catch (error) {
         console.error(error)
         res.status(400).json({

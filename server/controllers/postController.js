@@ -57,7 +57,6 @@ exports.login = async (req, res) => {
 exports.addVendor = async (req, res) => {
     try {
         const dbRes = await DB.addVendor(req.body)
-        console.log(dbRes)
         res.status(200).json({
             dbRes: dbRes
         })

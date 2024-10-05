@@ -35,7 +35,7 @@ const addItem = () => {
     emit("update")
   }).catch((err) => {
     zeroize()
-    console.log(err)
+    console.error(err)
   })
 
 }

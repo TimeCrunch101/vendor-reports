@@ -1,85 +1,53 @@
 <script setup>
-import ChartComponent from "../components/ChartComponent.vue"
-import axios from "axios"
+import NumOfItemTypes from "../components/charts/NumOfItemTypes.vue"
+import NumOfItems from "../components/charts/NumOfItems.vue"
+import axios from "axios";
 import { ref, reactive, onMounted } from 'vue';
+import { useAuthStore } from "../stores/auth.js"
 
-const chartData = ref({
-  labels: [],
-  datasets: [
-    {
-      label: '# of item types',
-      data: [],
-      fill: true,
-      tension: 0.1
-    }
-  ]
-});
-const chartOptions = ref({
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top'
-    },
-    title: {
-      display: true,
-      text: 'Items by Vendor'
-    }
-  }
-});
-
+const auth = useAuthStore()
+const token = ref(auth.getToken)
+const index = ref(null)
 const set = reactive({
-  chartData
+  index
 })
 
+
+
 const getData = () => {
-  axios.get("/api/v1/get/chart-data").then((res) => {
-      const data = res.data.chartData
-      let labels = []
-      let dataFromAPI = []
-      for (let i = 0; i < data.length; i++) {
-        const ele = data[i];
-        labels.push(ele.vendor)
-        dataFromAPI.push(ele.items)
-      }
-      set.chartData.labels = labels
-      set.chartData.datasets[0].data = dataFromAPI
+  axios.get("/api/v1/get/vendors",{
+    headers: {
+        Authorization: `Bearer ${token.value}`
+    }
+  }).then((res) => {
+    set.index = res.data.vendors.length
   }).catch((err) => {
       console.error(err)
   })
 }
 
+
+
 onMounted(() => {
   getData()
 })
-
 </script>
 
 <template>
-  <div id="chart-container">
-    <ChartComponent
-      :chartData="chartData"
-      :chartOptions="chartOptions"
-      chartType="bar"
-    />
-  </div>
+
+<div id="charts-container">
+  <NumOfItemTypes/>
+  <NumOfItems v-for="i in index" :index="i"/>
+</div>
+
 </template>
 
 <style scoped>
-
-#chart-container {
-  width: 500px;
-  height: 300px;
+#charts-container{
+  max-width: 1296px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
-
-.backgroundColor {
-  color: rgba(0, 255, 255, 1);
-}
-.borderColor {
-  color: rgba(255, 0, 0, 1);
-}
-.color {
-  color: #ffffff;
-}
-
-
 </style>

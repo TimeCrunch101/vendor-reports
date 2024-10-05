@@ -3,6 +3,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from "../stores/auth.js"
 import { onMounted, ref, reactive } from "vue";
 import VendorItemList from "../components/VendorItemList.vue"
+import VendorOverview from "../components/VendorOverview.vue"
 import axios from 'axios';
 
 const route = useRoute()
@@ -56,10 +57,10 @@ onMounted(() => {
 </ul>
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab" tabindex="0">
-    
+    <VendorOverview />
   </div>
   <div class="tab-pane fade" id="item-list-pane" role="tabpanel" aria-labelledby="item-list" tabindex="0">
-    <VendorItemList/>
+    <VendorItemList />
   </div>
   <div class="tab-pane fade" id="reports-pane" role="tabpanel" aria-labelledby="reports" tabindex="0">
     
