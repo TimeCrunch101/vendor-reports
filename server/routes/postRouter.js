@@ -11,6 +11,7 @@ const initPostRouter = (app) => {
     postRouter.post("/api/v1/delete/vendor/:id", auth.isAuthenticated, postController.deleteVendor)
     postRouter.post("/api/v1/add/item-to-vendor/:id", auth.isAuthenticated, postController.addItemToVendor)
     postRouter.post("/api/v1/delete/item/:id", auth.isAuthenticated, postController.deleteItem)
+    postRouter.post("/api/v1/submit/restock-form/:vendor_id", auth.isAuthenticated, postController.submitRestockForm)
     
 
     return app.use('/', postRouter);

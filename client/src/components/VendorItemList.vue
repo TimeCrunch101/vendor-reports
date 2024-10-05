@@ -52,7 +52,10 @@ onMounted(() => {
 
 <template>
 
-<AddItemModal @update="getItemList()"/>
+<div class="my-div">
+    <AddItemModal @update="getItemList()"/>
+    <button @click="getItemList()" class="btn btn-success mt-3"><i class="bi bi-arrow-clockwise"></i></button>
+</div>
 
 <div class="table-responsive">
         <table class="table table-striped">
@@ -108,5 +111,9 @@ onMounted(() => {
 }
 .bi-trash3-fill:hover {
     cursor: pointer;
+}
+.my-div {
+    display: flex;
+    justify-content: space-between;
 }
 </style>

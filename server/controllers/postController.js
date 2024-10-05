@@ -113,3 +113,19 @@ exports.deleteItem = async (req, res) => {
         })
     }
 }
+
+exports.submitRestockForm = async (req, res) => {
+    try {
+        for (let i = 0; i < req.body.restockForm.length; i++) {
+            const itemRestock = req.body.restockForm[i];
+            await DB.submitRestockForm(req.params.vendor_id, itemRestock)
+        }
+        res.sendStatus(200)
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}

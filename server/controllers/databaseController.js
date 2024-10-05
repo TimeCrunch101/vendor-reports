@@ -206,3 +206,32 @@ exports.getAllItems = () => {
     })
 }
 
+/**
+ * @param {Object} item The Item Object
+ * @param {String} item.id The ID of the Item
+ * @param {String} item.restockCount The amount of items to be restocked
+ * @param {String} item.restockDate The date the restock occurred
+ * @param {String} vendor_id The ID for the Vendor that owns the Item
+ * @returns The DB response object if the call was successful. Or and Error if something went wrong
+ */
+
+exports.submitRestockForm = (vendor_id, item) => {
+    return new Promise((resolve, reject) => {
+        DB.query("INSERT INTO restocks SET ?", {
+            id: uuidv4(),
+            item: item.id,
+            restock_qty: item.restockCount,
+            date: item.restockDate,
+            vendor_id: vendor_id
+        }, (err, res) => {
+            try {
+                if (err) throw err;
+                resolve(res)
+            } catch (error) {
+                reject(error)
+            }
+        })        
+
+    })
+}
+

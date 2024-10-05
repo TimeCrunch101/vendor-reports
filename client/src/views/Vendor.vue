@@ -4,6 +4,7 @@ import { useAuthStore } from "../stores/auth.js"
 import { onMounted, ref, reactive } from "vue";
 import VendorItemList from "../components/VendorItemList.vue"
 import VendorOverview from "../components/VendorOverview.vue"
+import Restock from "../components/Restock.vue"
 import axios from 'axios';
 
 const route = useRoute()
@@ -52,7 +53,7 @@ onMounted(() => {
     <button class="nav-link" id="item-list" data-bs-toggle="tab" data-bs-target="#item-list-pane" type="button" role="tab" aria-controls="item-list-pane" aria-selected="false">Inventory</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="reports" data-bs-toggle="tab" data-bs-target="#reports-pane" type="button" role="tab" aria-controls="reports-pane" aria-selected="false">Reports</button>
+    <button class="nav-link" id="restocks" data-bs-toggle="tab" data-bs-target="#restocks-pane" type="button" role="tab" aria-controls="restocks-pane" aria-selected="false">Restocks</button>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
@@ -62,8 +63,8 @@ onMounted(() => {
   <div class="tab-pane fade" id="item-list-pane" role="tabpanel" aria-labelledby="item-list" tabindex="0">
     <VendorItemList />
   </div>
-  <div class="tab-pane fade" id="reports-pane" role="tabpanel" aria-labelledby="reports" tabindex="0">
-    
+  <div class="tab-pane fade" id="restocks-pane" role="tabpanel" aria-labelledby="restocks" tabindex="0">
+    <Restock/>
   </div>
 </div>
 </template>
