@@ -4,6 +4,7 @@ import { useAuthStore } from "../stores/auth.js"
 import { onMounted, ref, reactive } from "vue";
 import VendorItemList from "../components/VendorItemList.vue"
 import VendorOverview from "../components/VendorOverview.vue"
+import VendorEOMReport from "../components/VendorEOMReport.vue"
 import Restock from "../components/Restock.vue"
 import axios from 'axios';
 
@@ -55,6 +56,9 @@ onMounted(() => {
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="restocks" data-bs-toggle="tab" data-bs-target="#restocks-pane" type="button" role="tab" aria-controls="restocks-pane" aria-selected="false">Restocks</button>
   </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="eom-report" data-bs-toggle="tab" data-bs-target="#eom-report-pane" type="button" role="tab" aria-controls="eom-report-pane" aria-selected="false">EOM Report</button>
+  </li>
 </ul>
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab" tabindex="0">
@@ -65,6 +69,9 @@ onMounted(() => {
   </div>
   <div class="tab-pane fade" id="restocks-pane" role="tabpanel" aria-labelledby="restocks" tabindex="0">
     <Restock/>
+  </div>
+  <div class="tab-pane fade" id="eom-report-pane" role="tabpanel" aria-labelledby="eom-report" tabindex="0">
+    <VendorEOMReport/>
   </div>
 </div>
 </template>
