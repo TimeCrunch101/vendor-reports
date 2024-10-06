@@ -106,12 +106,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.bi-trash3-fill {
-    color: rgb(255, 72, 72)
-}
-.bi-trash3-fill:hover {
-    cursor: pointer;
-}
 .my-div {
     display: flex;
     justify-content: space-between;

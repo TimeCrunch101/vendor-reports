@@ -263,6 +263,33 @@ exports.getRestockFormsByVendor = (id) => {
     })
 }
 
+exports.getAllRestockForms = () => {
+    return new Promise((resolve, reject) => {
+        DB.query(`
+            SELECT
+                restocks.id,
+                items.item_name,
+                restocks.item AS item_id,
+                restocks.restock_qty,
+                restocks.date,
+                restocks.vendor_id,
+                vendors.name AS vendor_name
+            FROM
+                restocks
+                LEFT JOIN vendors ON restocks.vendor_id = vendors.id
+                LEFT JOIN items on restocks.item = items.id
+                ORDER BY restocks.date ASC
+            `, [], (err, restockForms) => {
+            try {
+                if (err) throw err;
+                resolve(restockForms)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
 exports.deleteRestockOrder = (id) => {
     return new Promise((resolve, reject) => {
         DB.query("DELETE FROM restocks WHERE id = ?",[id], (err, res) => {

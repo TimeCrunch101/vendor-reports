@@ -128,3 +128,18 @@ exports.getRestockFormsByVendor = async (req, res) => {
         })
     }
 }
+
+exports.getAllRestockForms = async (req, res) => {
+    try {
+        const restockForms = await DB.getAllRestockForms()
+        res.status(200).json({
+            restockForms: restockForms
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}
