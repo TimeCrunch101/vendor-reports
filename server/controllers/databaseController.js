@@ -340,3 +340,28 @@ exports.getRestocksByVendorAndCurrentDate = (vendor_id, currentMonth) => {
             })
     })
 }
+
+exports.getItemSalesByVendor = (vendor_id) => {
+    return new Promise((resolve, reject) => {
+        DB.query(`
+            SELECT
+                items.*,
+                sales.id AS sales_id,
+                sales.qty_sold,
+                sales.start_date,
+                sales.end_date
+            FROM
+                items
+                LEFT JOIN sales ON items.id = sales.id
+                WHERE vendor = ?
+                
+            `,[vendor_id], (err, sales) => {
+                try {
+                    if (err) throw err;
+                    resolve(sales)
+                } catch (error) {
+                    reject(error)
+                }
+            })
+    })
+}

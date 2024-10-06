@@ -39,7 +39,6 @@ const getData = () => {
         }
     }).then((res) => {
         set.tableData = res.data.restockReport
-        console.log(res.data.restockReport)
     }).catch((err) => {
         console.error(err)
     })
@@ -47,7 +46,7 @@ const getData = () => {
 
 
 const test = computed((i) => {
-    console.log(i)
+    
     return 0
 })
 

@@ -17,9 +17,8 @@ const getVendors = () => {
         headers: {
             Authorization: `Bearer ${token.value}`
         }
-    }).then((res) => {
-      console.log(res.data)
-        set.vendors = res.data.vendors
+      }).then((res) => {
+      set.vendors = res.data.vendors
     }).catch((err) => {
         console.error(err.response.data)
     })

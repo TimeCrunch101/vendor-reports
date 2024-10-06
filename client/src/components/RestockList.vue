@@ -33,7 +33,6 @@ const deleteRestockOrder = (id) => {
             Authorization: `Bearer ${token.value}`
         }
     }).then((res) => {
-        console.log(res)
         getRestockForms()
     }).catch((err) => {
         console.error(err)

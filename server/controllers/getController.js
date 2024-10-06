@@ -160,3 +160,18 @@ exports.getEOMReport = async (req, res) => {
         })
     }
 }
+
+exports.getItemSalesByVendor = async (req, res) => {
+    try {
+        const vendorSales = await DB.getItemSalesByVendor(req.params.id)
+        res.status(200).json({
+            vendorSales: vendorSales
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}
