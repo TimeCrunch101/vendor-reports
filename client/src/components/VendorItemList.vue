@@ -64,6 +64,7 @@ onMounted(() => {
                     <th scope="col">Item</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity OH</th>
+                    <th scope="col">ISBN</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -72,6 +73,7 @@ onMounted(() => {
                     <td>{{ item.item_name }}</td>
                     <td>${{ item.price }}</td>
                     <td>{{ item.qty }}</td>
+                    <td>{{ item.isbn }}</td>
                     <td><i @click="deleteItem(item.id)" class="bi bi-trash3-fill"></i></td>
                 </tr>
             </tbody>

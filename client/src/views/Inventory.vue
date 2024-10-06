@@ -57,6 +57,7 @@ onMounted(() => {
                     <th scope="col">Vendor</th>
                     <th scope="col">Vendor Consignment</th>
                     <th scope="col">Vendor Code</th>
+                    <th scope="col">ISBN</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -68,6 +69,7 @@ onMounted(() => {
                     <td><router-link :to="`/vendor/${item.vendor_id}`">{{ item.vendor_name }}</router-link></td>
                     <td>{{ item.consignment }}</td>
                     <td>{{ item.bm_ven_code }}</td>
+                    <td>{{ item.isbn }}</td>
                     <td><i @click="deleteItem(item.id)" class="bi bi-trash3-fill"></i></td>
                 </tr>
             </tbody>

@@ -153,6 +153,7 @@ exports.addItemToVendor = (vendorID, item) => {
             id: uuidv4(),
             item_name: item.item_name,
             price: item.price,
+            isbn: item.isbn,
             qty: item.qty,
             vendor: vendorID
         }, (err, res) => {
@@ -190,7 +191,8 @@ exports.getAllItems = () => {
                 vendors.id AS vendor_id,
                 vendors.name AS vendor_name,
                 vendors.consignment,
-                vendors.bm_ven_code
+                vendors.bm_ven_code,
+                items.isbn
             FROM
                 items
                 LEFT JOIN vendors ON items.vendor = vendors.id
@@ -245,7 +247,8 @@ exports.getRestockFormsByVendor = (id) => {
                 restocks.restock_qty,
                 restocks.date,
                 restocks.vendor_id,
-                vendors.name AS vendor_name
+                vendors.name AS vendor_name,
+                items.isbn
             FROM
                 restocks
                 LEFT JOIN vendors ON restocks.vendor_id = vendors.id
@@ -273,7 +276,8 @@ exports.getAllRestockForms = () => {
                 restocks.restock_qty,
                 restocks.date,
                 restocks.vendor_id,
-                vendors.name AS vendor_name
+                vendors.name AS vendor_name,
+                items.isbn
             FROM
                 restocks
                 LEFT JOIN vendors ON restocks.vendor_id = vendors.id

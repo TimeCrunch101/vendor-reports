@@ -54,6 +54,7 @@ onMounted(() => {
                     <th scope="col">Item</th>
                     <th scope="col">Restock Qty</th>
                     <th scope="col">Date</th>
+                    <th scope="col">ISBN</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -62,6 +63,7 @@ onMounted(() => {
                     <td>{{ form.item_name }}</td>
                     <td>{{ form.restock_qty }}</td>
                     <td>{{ form.date.split("T")[0] }}</td>
+                    <td>{{ form.isbn }}</td>
                     <td><i @click="deleteRestockOrder(form.id)" class="bi bi-trash3-fill"></i></td>
                 </tr>
             </tbody>

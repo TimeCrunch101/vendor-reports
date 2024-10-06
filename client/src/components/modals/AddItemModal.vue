@@ -11,6 +11,7 @@ const token = ref(auth.getToken)
 const form = ref({
   item_name: null,
   price: null,
+  isbn: null,
   qty: null
 })
 
@@ -25,6 +26,7 @@ const addItem = () => {
   axios.post(`/api/v1/add/item-to-vendor/${route.params.id}`,{
     item_name: form.value.item_name,
     price: form.value.price,
+    isbn: form.value.isbn,
     qty: form.value.qty
   }, {
     headers: {
@@ -64,6 +66,10 @@ const addItem = () => {
            <div class="mb-3">
              <label for="price" class="form-label">Price</label>
              <input type="number" step="0.01" min="0" class="form-control" id="price" v-model="form.price" required>
+           </div>
+           <div class="mb-3">
+             <label for="isbn" class="form-label">ISBN</label>
+             <input type="text" step="1" min="1" class="form-control" id="isbn" v-model="form.isbn">
            </div>
            <div class="mb-3">
              <label for="qty" class="form-label">Quantity</label>
