@@ -15,6 +15,7 @@ const initGetRouter = (app) => {
   getRouter.get("/api/v1/get/chart-data/item-count", auth.isAuthenticated, getController.getChartDataVendorItemCount)
   getRouter.get("/api/v1/get/restock-forms/by-vendor/:id", auth.isAuthenticated, getController.getRestockFormsByVendor)
   getRouter.get("/api/v1/get/restock-forms", auth.isAuthenticated, getController.getAllRestockForms)
+  getRouter.post("/api/v1/get/vendor/eom-report", auth.isAuthenticated, getController.getEOMReport)
 
   return app.use("/", getRouter);
 };

@@ -19,6 +19,7 @@ const emit = defineEmits(["update"])
 const zeroize = () => {
   form.value.item_name = null
   form.value.price = null
+  form.value.isbn = null
   form.value.qty = null
 }
 

@@ -61,3 +61,18 @@ exports.checkUserFields = (user) => {
         }
     })
 }
+
+exports.prepareReport = (report) => {
+    return new Promise((resolve, reject) => {
+        const itemMap = new Map();
+        report.forEach(item => {
+          const existingItem = itemMap.get(item.item_id);
+          if (existingItem) {
+            existingItem.restock_qty += item.restock_qty ?? 0;
+          } else {
+            itemMap.set(item.item_id, { ...item });
+          }
+        });
+        resolve(Array.from(itemMap.values()))
+    })
+}

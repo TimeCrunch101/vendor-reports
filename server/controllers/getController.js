@@ -1,4 +1,5 @@
 const DB = require("./databaseController")
+const utils = require("../utils/validate")
 
 exports.secretRouteTest = async (req, res) => {
     console.info(res.user)
@@ -134,6 +135,22 @@ exports.getAllRestockForms = async (req, res) => {
         const restockForms = await DB.getAllRestockForms()
         res.status(200).json({
             restockForms: restockForms
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}
+
+exports.getEOMReport = async (req, res) => {
+    try {
+        const restockReport = await DB.getRestocksByVendorAndCurrentDate(req.body.vendor_id,req.body.currentMonth)
+        const newReport = await utils.prepareReport(restockReport)
+        res.status(200).json({
+            restockReport: newReport
         })
     } catch (error) {
         console.error(error)

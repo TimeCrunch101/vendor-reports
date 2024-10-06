@@ -102,9 +102,11 @@ onMounted(() => {
 <template>
 
 
-
-<button v-if="showForm === false" @click="toggleForm()" class="btn btn-primary mt-3 mb-3">Create Restock Order</button>
-<button v-else @click="toggleForm()" class="btn btn-outline-primary mt-3 mb-3">Close Restock Order</button>
+<div class="my-div">
+    <button v-if="showForm === false" @click="toggleForm()" class="btn btn-primary mt-3 mb-3">Create Restock Order</button>
+    <button v-else @click="toggleForm()" class="btn btn-outline-primary mt-3 mb-3">Close Restock Order</button>
+    <button @click="getItems()" class="btn btn-success mt-3"><i class="bi bi-arrow-clockwise"></i></button>
+</div>
 
 <div v-if="showForm">
     <form @submit.prevent="submitRestockForm()">
@@ -159,5 +161,8 @@ onMounted(() => {
 .form-control-sm {
     width: 60px;
 }
-
+.my-div {
+    display: flex;
+    justify-content: space-between;
+}
 </style>

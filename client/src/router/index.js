@@ -39,6 +39,11 @@ const router = createRouter({
       name: 'Restocks',
       component: () => import('../views/Restocks.vue')
     },
+    {
+      path: '/eom/reports',
+      name: 'EOM Reports',
+      component: () => import('../views/EOMReports.vue')
+    },
   ]
 })
 
