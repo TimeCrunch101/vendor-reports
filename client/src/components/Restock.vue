@@ -46,7 +46,6 @@ const removeItemByID = (id) => {
 const handleChange = (id, name, qty, event) => {
   const isChecked = event.target.checked;
   if (isChecked) {
-      console.log(`Item ID: ${id}, Checked: ${isChecked}, Item Name: ${name}`);
       set.itemsToUpdate.push({
         id: id,
         name: name,
@@ -60,6 +59,20 @@ const handleChange = (id, name, qty, event) => {
   }
 }
 
+const setTodaysDate = () => {
+    const today = new Date().toISOString().split('T')[0];
+    set.todaysDate = today
+}
+
+const updateDate = (e) => {
+    set.todaysDate = e.target.value
+    if (itemsToUpdate.value.length > 0) {
+        set.itemsToUpdate.forEach((item, index) => {
+            set.itemsToUpdate[index].restockDate = todaysDate.value
+        });
+    }
+}
+
 const submitRestockForm = () => {
     axios.post(`/api/v1/submit/restock-form/${route.params.id}`,{
         restockForm: itemsToUpdate.value
@@ -70,18 +83,15 @@ const submitRestockForm = () => {
     }).then((res) => {
         set.itemsToUpdate = []
         set.showForm = false
-        const today = new Date().toISOString().split('T')[0];
-        set.todaysDate = today
+        setTodaysDate()
         getItems()
-        alert("Success")
     }).catch((err) => {
         console.error(err)
     })
 }
 
 onMounted(() => {
-    const today = new Date().toISOString().split('T')[0];
-    set.todaysDate = today
+    setTodaysDate()
     getItems()
 })
 
@@ -94,9 +104,10 @@ onMounted(() => {
 <button @click="toggleForm()" class="btn btn-primary mt-3">Create Restock Order</button>
 
 <div v-if="showForm">
+    <form @submit.prevent="submitRestockForm()">
     <div class="mb-3">
         <label for="restock-date">Restock Date</label>
-        <input id="restock-date" class="form-control w-auto" type="date" :value="todaysDate"/>
+        <input @change="updateDate($event)" id="restock-date" class="form-control w-auto" type="date" v-model="todaysDate"/>
     </div>
     <div class="my-class">
         <div class="mb-3 checkbox-group">
@@ -115,7 +126,6 @@ onMounted(() => {
     </div>
     <div v-if="itemsToUpdate.length !== 0">
         <hr>
-        <form @submit.prevent="submitRestockForm()">
             <button class="btn btn-success" type="submit">Submit</button>
             <div v-for="(item, index) in itemsToUpdate" :key="item.id">
                 <span style="font-weight: 500;">{{ item.name }}</span>
@@ -124,8 +134,8 @@ onMounted(() => {
                     <input :id="item.id" type="number" min="0" class="form-control form-control-sm ms-3" :value="item.restockCount" v-model="item.restockCount">
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 
 <RestockList v-if="showForm !== true"/>

@@ -27,8 +27,17 @@ const getRestockForms = () => {
     })
 }
 
-const deleteForm = (id) => {
-    console.log(`FORM TO DELETE: ${id}`)
+const deleteRestockOrder = (id) => {
+    axios.post(`/api/v1/delete/restock-order/${id}`,{
+        headers: {
+            Authorization: `Bearer ${token.value}`
+        }
+    }).then((res) => {
+        console.log(res)
+        getRestockForms()
+    }).catch((err) => {
+        console.error(err)
+    })
 }
 
 onMounted(() => {
@@ -53,7 +62,7 @@ onMounted(() => {
                     <td>{{ form.item_name }}</td>
                     <td>{{ form.restock_qty }}</td>
                     <td>{{ form.date.split("T")[0] }}</td>
-                    <td><i @click="deleteForm(form.id)" class="bi bi-trash3-fill"></i></td>
+                    <td><i @click="deleteRestockOrder(form.id)" class="bi bi-trash3-fill"></i></td>
                 </tr>
             </tbody>
             <tbody v-else>

@@ -129,3 +129,18 @@ exports.submitRestockForm = async (req, res) => {
         })
     }
 }
+
+exports.deleteRestockOrder = async (req, res) => {
+    try {
+        const dbRes = await DB.deleteRestockOrder(req.params.id)
+        res.status(200).json({
+            dbRes: dbRes
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}

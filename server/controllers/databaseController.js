@@ -262,3 +262,17 @@ exports.getRestockFormsByVendor = (id) => {
         })
     })
 }
+
+exports.deleteRestockOrder = (id) => {
+    return new Promise((resolve, reject) => {
+        DB.query("DELETE FROM restocks WHERE id = ?",[id], (err, res) => {
+            try {
+                if (err) throw err;
+                resolve(res)
+            } catch (error) {
+                reject(error)
+            }
+        })
+
+    })
+}
