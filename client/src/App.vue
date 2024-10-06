@@ -34,4 +34,7 @@ import NavBar from './components/NavBar.vue';
 .placeholder-glow {
     margin-bottom: 0;
 }
+.active {
+  font-weight: bold;
+}
 </style>
