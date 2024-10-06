@@ -20,6 +20,8 @@ const set = reactive({
 })
 
 const toggleForm = () => {
+    set.itemsToUpdate = []
+    setTodaysDate()
     if (showForm.value === true) {
         set.showForm = false
     } else {
@@ -101,7 +103,8 @@ onMounted(() => {
 
 
 
-<button @click="toggleForm()" class="btn btn-primary mt-3">Create Restock Order</button>
+<button v-if="showForm === false" @click="toggleForm()" class="btn btn-primary mt-3 mb-3">Create Restock Order</button>
+<button v-else @click="toggleForm()" class="btn btn-outline-primary mt-3 mb-3">Close Restock Order</button>
 
 <div v-if="showForm">
     <form @submit.prevent="submitRestockForm()">
