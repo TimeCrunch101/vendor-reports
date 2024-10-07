@@ -147,11 +147,16 @@ exports.getAllRestockForms = async (req, res) => {
 
 exports.getEOMReport = async (req, res) => {
     try {
-        const restockReport = await DB.getRestocksByVendorAndCurrentDate(req.body.vendor_id,req.body.currentMonth)
+        let restockReport = null
+        restockReport = await DB.getRestocksByVendorAndCurrentDate(req.body.vendor_id,req.body.currentMonth)
+        if (restockReport.length === 0) {
+            restockReport = await DB.getRestocksByVendorNoDate(req.body.vendor_id)
+        }
         const newReport = await utils.prepareReport(restockReport)
         res.status(200).json({
             restockReport: newReport
         })
+        restockReport = null
     } catch (error) {
         console.error(error)
         res.status(400).json({
@@ -166,6 +171,21 @@ exports.getItemSalesByVendor = async (req, res) => {
         const vendorSales = await DB.getItemSalesByVendor(req.params.id)
         res.status(200).json({
             vendorSales: vendorSales
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}
+
+exports.getVendorSales = async (req, res) => {
+    try {
+        const vendorSalesAll = await DB.getVendorSales(req.params.id)
+        res.status(200).json({
+            vendorSalesAll: vendorSalesAll
         })
     } catch (error) {
         console.error(error)

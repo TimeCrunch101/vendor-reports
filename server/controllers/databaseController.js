@@ -341,6 +341,37 @@ exports.getRestocksByVendorAndCurrentDate = (vendor_id, currentMonth) => {
     })
 }
 
+exports.getRestocksByVendorNoDate = (vendor_id) => {
+    return new Promise((resolve, reject) => {
+        DB.query(`
+            SELECT
+                items.id AS item_id,
+                items.item_name,
+                items.price,
+                items.qty,
+                items.vendor AS item_vendor,
+                vendors.name AS vendor_name,
+                vendors.consignment,
+                items.isbn,
+                restocks.id AS restock_id,
+                restocks.restock_qty,
+                restocks.date AS restock_date
+            FROM
+                items
+                LEFT JOIN restocks ON items.id = restocks.item
+                LEFT JOIN vendors ON items.vendor = vendors.id
+                WHERE items.vendor = ? 
+            `,[vendor_id], (err, data) => {
+                try {
+                    if (err) throw err;
+                    resolve(data)
+                } catch (error) {
+                    reject(error)
+                }
+            })
+    })
+}
+
 exports.getItemSalesByVendor = (vendor_id) => {
     return new Promise((resolve, reject) => {
         DB.query(`
@@ -355,6 +386,34 @@ exports.getItemSalesByVendor = (vendor_id) => {
                 LEFT JOIN sales ON items.id = sales.id
                 WHERE vendor = ?
                 
+            `,[vendor_id], (err, sales) => {
+                try {
+                    if (err) throw err;
+                    resolve(sales)
+                } catch (error) {
+                    reject(error)
+                }
+            })
+    })
+}
+
+exports.getVendorSales = (vendor_id) => {
+    return new Promise((resolve, reject) => {
+        DB.query(`
+            SELECT
+                sales.id AS sale_id,
+                sales.item_id,
+                items.item_name,
+                sales.qty_sold,
+                sales.start_date,
+                sales.end_date,
+                sales.vendor_id,
+                vendors.name AS vendor_name
+            FROM
+                sales
+                LEFT JOIN items ON sales.item_id = items.id
+                LEFT JOIN vendors ON sales.vendor_ID = vendors.id
+                WHERE sales.vendor_id = ?
             `,[vendor_id], (err, sales) => {
                 try {
                     if (err) throw err;

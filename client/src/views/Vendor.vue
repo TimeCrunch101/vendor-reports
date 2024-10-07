@@ -6,6 +6,7 @@ import VendorItemList from "../components/VendorItemList.vue"
 import VendorOverview from "../components/VendorOverview.vue"
 import VendorEOMReport from "../components/VendorEOMReport.vue"
 import VendorSales from "../components/VendorSales.vue"
+import VendorSalesPast from "../components/VendorSalesPast.vue"
 import Restock from "../components/Restock.vue"
 import axios from 'axios';
 
@@ -76,6 +77,7 @@ onMounted(() => {
   </div>
   <div class="tab-pane fade" id="sales-pane" role="tabpanel" aria-labelledby="sales" tabindex="0">
     <VendorSales :vendorName="vendor.name"/>
+    <VendorSalesPast :vendorName="vendor.name"/>
   </div>
   <div class="tab-pane fade" id="eom-report-pane" role="tabpanel" aria-labelledby="eom-report" tabindex="0">
     <VendorEOMReport :vendorName="vendor.name" :vendorID="route.params.id"/>

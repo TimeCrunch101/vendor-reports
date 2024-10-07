@@ -150,8 +150,10 @@ exports.saveSalesForVendor = async (req, res) => {
         let responses = []
         for (let i = 0; i < req.body.sales.length; i++) {
             const sale = req.body.sales[i];
-            const dbRes = await DB.saveSalesForVendor(sale, req.body.dateRange, req.params.vendor_id)
-            responses.push(dbRes)
+            if (sale.qty_sold !== 0) {
+                const dbRes = await DB.saveSalesForVendor(sale, req.body.dateRange, req.params.vendor_id)
+                responses.push(dbRes)
+            }
         }
         res.status(200).json({
             dbRes: responses
