@@ -365,3 +365,23 @@ exports.getItemSalesByVendor = (vendor_id) => {
             })
     })
 }
+
+exports.saveSalesForVendor = (sale, dateRange, vendor_id) => {
+    return new Promise((resolve, reject) => {
+        DB.query("INSERT INTO sales SET ?", {
+            id: uuidv4(),
+            item_id: sale.id,
+            qty_sold: sale.qty_sold,
+            vendor_id: vendor_id,
+            start_date: dateRange.firstDay,
+            end_date: dateRange.lastDay
+        }, (err, res) => {
+            try {
+                if (err) throw err;
+                resolve(res)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
