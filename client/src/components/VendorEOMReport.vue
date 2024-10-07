@@ -68,7 +68,7 @@ onMounted(() => {
 
 <div v-if="tableData?.length !== 0" class="table-responsive">
     <table class="table table-hover table-bordered table-striped table-sm">
-        <!-- <caption>EOM Report - {{ props.vendorName }}</caption> -->
+        <caption>EOM Report - {{ props.vendorName }}</caption>
     <thead>
         <tr>
           <th scope="col">Vendor</th>

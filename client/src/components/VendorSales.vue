@@ -4,6 +4,9 @@ import { useRoute } from "vue-router";
 import { useAuthStore } from '../stores/auth.js';
 import {ref,reactive, onMounted} from "vue";
 
+const props = defineProps({
+    vendorName: String
+})
 const auth = useAuthStore()
 const route = useRoute()
 const token = ref(auth.getToken)
@@ -35,7 +38,7 @@ onMounted(() => {
 
 <div class="table-responsive">
     <table class="table table-hover table-bordered table-striped table-sm">
-        <!-- <caption>EOM Report - {{ props.vendorName }}</caption> -->
+        <caption>EOM Sales - {{ props.vendorName }}</caption>
     <thead>
         <tr>
           <th scope="col">Item</th>

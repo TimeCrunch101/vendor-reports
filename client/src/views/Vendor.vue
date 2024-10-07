@@ -75,7 +75,7 @@ onMounted(() => {
     <Restock/>
   </div>
   <div class="tab-pane fade" id="sales-pane" role="tabpanel" aria-labelledby="sales" tabindex="0">
-    <VendorSales />
+    <VendorSales :vendorName="vendor.name"/>
   </div>
   <div class="tab-pane fade" id="eom-report-pane" role="tabpanel" aria-labelledby="eom-report" tabindex="0">
     <VendorEOMReport :vendorName="vendor.name" :vendorID="route.params.id"/>
