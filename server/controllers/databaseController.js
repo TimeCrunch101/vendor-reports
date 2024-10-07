@@ -308,7 +308,7 @@ exports.deleteRestockOrder = (id) => {
     })
 }
 
-exports.getRestocksByVendorAndCurrentDate = (vendor_id, currentMonth) => {
+exports.getRestocksByVendorAndCurrentDate = (vendor_id) => {
     return new Promise((resolve, reject) => {
         DB.query(`
             SELECT
@@ -322,45 +322,18 @@ exports.getRestocksByVendorAndCurrentDate = (vendor_id, currentMonth) => {
                 items.isbn,
                 restocks.id AS restock_id,
                 restocks.restock_qty,
+                sales.id AS sales_id,
+                sales.qty_sold,
+                sales.start_date,
+                sales.end_date,
                 restocks.date AS restock_date
             FROM
                 items
                 LEFT JOIN restocks ON items.id = restocks.item
                 LEFT JOIN vendors ON items.vendor = vendors.id
+                LEFT JOIN sales ON items.id = sales.item_id
                 WHERE items.vendor = ? 
-                AND (restocks.date LIKE ? OR restocks.date IS NULL)
                 
-            `,[vendor_id, `%${currentMonth}%`], (err, data) => {
-                try {
-                    if (err) throw err;
-                    resolve(data)
-                } catch (error) {
-                    reject(error)
-                }
-            })
-    })
-}
-
-exports.getRestocksByVendorNoDate = (vendor_id) => {
-    return new Promise((resolve, reject) => {
-        DB.query(`
-            SELECT
-                items.id AS item_id,
-                items.item_name,
-                items.price,
-                items.qty,
-                items.vendor AS item_vendor,
-                vendors.name AS vendor_name,
-                vendors.consignment,
-                items.isbn,
-                restocks.id AS restock_id,
-                restocks.restock_qty,
-                restocks.date AS restock_date
-            FROM
-                items
-                LEFT JOIN restocks ON items.id = restocks.item
-                LEFT JOIN vendors ON items.vendor = vendors.id
-                WHERE items.vendor = ? 
             `,[vendor_id], (err, data) => {
                 try {
                     if (err) throw err;
@@ -371,6 +344,37 @@ exports.getRestocksByVendorNoDate = (vendor_id) => {
             })
     })
 }
+
+// exports.getRestocksByVendorNoDate = (vendor_id) => {
+//     return new Promise((resolve, reject) => {
+//         DB.query(`
+//             SELECT
+//                 items.id AS item_id,
+//                 items.item_name,
+//                 items.price,
+//                 items.qty,
+//                 items.vendor AS item_vendor,
+//                 vendors.name AS vendor_name,
+//                 vendors.consignment,
+//                 items.isbn,
+//                 restocks.id AS restock_id,
+//                 restocks.restock_qty,
+//                 restocks.date AS restock_date
+//             FROM
+//                 items
+//                 LEFT JOIN restocks ON items.id = restocks.item
+//                 LEFT JOIN vendors ON items.vendor = vendors.id
+//                 WHERE items.vendor = ? 
+//             `,[vendor_id], (err, data) => {
+//                 try {
+//                     if (err) throw err;
+//                     resolve(data)
+//                 } catch (error) {
+//                     reject(error)
+//                 }
+//             })
+//     })
+// }
 
 exports.getItemSalesByVendor = (vendor_id) => {
     return new Promise((resolve, reject) => {

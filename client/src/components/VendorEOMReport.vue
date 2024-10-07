@@ -28,11 +28,11 @@ const getFirstAndLastDayOfMonth = () => {
 };
 
 const getData = () => {
-    const { firstDay, lastDay } = getFirstAndLastDayOfMonth();
-    const currentMonth = `${firstDay.split("-")[0]}-${firstDay.split("-")[1]}`
+    // const { firstDay, lastDay } = getFirstAndLastDayOfMonth();
+    // const currentMonth = `${firstDay.split("-")[0]}-${firstDay.split("-")[1]}`
     axios.post("/api/v1/get/vendor/eom-report", {
         vendor_id: props.vendorID,
-        currentMonth: currentMonth
+        // currentMonth: currentMonth
     }, {
         headers: {
             Authorization: `Bearer ${token.value}`
@@ -43,12 +43,6 @@ const getData = () => {
         console.error(err)
     })
 }
-
-
-const test = computed((i) => {
-    
-    return 0
-})
 
 onMounted(() => {
     getData()
@@ -91,10 +85,11 @@ onMounted(() => {
           <td>{{ item.qty }}</td>
           <td v-if="item.restock_qty !== null">{{ item.restock_qty}}</td>
           <td v-else>0</td>
-          <td><input class="form-control form-control-sm w-auto" type="number" min="0" step="1" name="sold" :id="item.item_id" v-model="tableData[index].qty"></td>
-          <td>{{ test }}</td>
-          <td></td>
-          <td></td>
+          <td v-if="item.qty_sold !== null">{{ item.qty_sold }}</td>
+          <td v-else>0</td>
+          <td>${{ item.price * item.qty_sold }}</td>
+          <td>${{ (item.price * item.qty_sold) * item.consignment }}</td>
+          <td>${{ ((item.price * item.qty_sold) - ((item.price * item.qty_sold) * item.consignment)) }}</td>
         </tr>
     </tbody>
     </table>
