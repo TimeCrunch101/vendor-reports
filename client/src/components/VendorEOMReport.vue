@@ -16,6 +16,13 @@ const set = reactive({
     tableData
 })
 
+const formatToUSD = (amount) => {
+  return new Intl.NumberFormat('en-US', { 
+    style: 'currency', 
+    currency: 'USD' 
+  }).format(amount);
+}
+
 const getFirstAndLastDayOfMonth = () => {
   const now = new Date();
   const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -87,9 +94,9 @@ onMounted(() => {
           <td v-else>0</td>
           <td v-if="item.qty_sold !== null">{{ item.qty_sold }}</td>
           <td v-else>0</td>
-          <td>${{ item.price * item.qty_sold }}</td>
-          <td>${{ (item.price * item.qty_sold) * item.consignment }}</td>
-          <td>${{ ((item.price * item.qty_sold) - ((item.price * item.qty_sold) * item.consignment)) }}</td>
+          <td>{{ formatToUSD(item.price * item.qty_sold) }}</td>
+          <td>{{ formatToUSD((item.price * item.qty_sold) * item.consignment) }}</td>
+          <td>{{ formatToUSD(((item.price * item.qty_sold) - ((item.price * item.qty_sold) * item.consignment))) }}</td>
         </tr>
     </tbody>
     </table>
