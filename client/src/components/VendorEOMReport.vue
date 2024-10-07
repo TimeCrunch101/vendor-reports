@@ -66,7 +66,7 @@ onMounted(() => {
 
 
 
-<div class="table-responsive">
+<div v-if="tableData?.length !== 0" class="table-responsive">
     <table class="table table-hover table-bordered table-striped table-sm">
         <!-- <caption>EOM Report - {{ props.vendorName }}</caption> -->
     <thead>
@@ -95,18 +95,8 @@ onMounted(() => {
           <td>{{ test }}</td>
           <td></td>
           <td></td>
-          <!-- <td class="table-success"></td> -->
         </tr>
     </tbody>
-    <!-- <tfoot>
-        <tr>
-          <th scope="row"></th>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-    </tfoot> -->
     </table>
 </div>
 

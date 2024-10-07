@@ -7,10 +7,8 @@ import Modal from '../components/modals/AddVendorModal.vue';
 const auth = useAuthStore()
 const token = ref(auth.getToken)
 const vendors = ref([])
-const loading = ref(true)
 const set = reactive({
-    vendors,
-    loading
+    vendors
 })
 
 const getVendors = () => {
@@ -20,7 +18,6 @@ const getVendors = () => {
         }
     }).then((res) => {
         set.vendors = res.data.vendors
-        set.loading = false
     }).catch((err) => {
         console.error(err.response.data)
     })
@@ -59,7 +56,7 @@ onMounted(() => {
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody v-if="loading === false">
+            <tbody>
                 <tr v-for="vendor in vendors">
                     <td><router-link :to="`/vendor/${vendor.id}`">{{ vendor.name }}</router-link></td>
                     <td v-if="vendor.poc !== null">{{ vendor.poc }}</td>
@@ -67,31 +64,6 @@ onMounted(() => {
                     <td>{{ vendor.consignment }}</td>
                     <td>{{ vendor.bm_ven_code }}</td>
                     <td><i @click="deleteVendor(vendor.id)" class="bi bi-trash3-fill"></i></td>
-                </tr>
-            </tbody>
-            <tbody v-else>
-                <tr v-for="num in 5">
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    
                 </tr>
             </tbody>
         </table>

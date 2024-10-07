@@ -7,10 +7,8 @@ import {ref,reactive, onMounted} from "vue";
 const auth = useAuthStore()
 const token = ref(auth.getToken)
 const items = ref(null)
-const loading = ref(true)
 const set = reactive({
-    items,
-    loading
+    items
 })
 
 const getItems = () => {
@@ -20,7 +18,6 @@ const getItems = () => {
         }
     }).then((res) => {
         set.items = res.data.allItems
-        set.loading = false
     }).catch((err) => {
         console.error(err.response.data)
     })
@@ -61,7 +58,7 @@ onMounted(() => {
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody v-if="loading === false">
+            <tbody>
                 <tr v-for="item in items">
                     <td>{{ item.item_name }}</td>
                     <td>${{ item.price }}</td>
@@ -71,46 +68,6 @@ onMounted(() => {
                     <td>{{ item.bm_ven_code }}</td>
                     <td>{{ item.isbn }}</td>
                     <td><i @click="deleteItem(item.id)" class="bi bi-trash3-fill"></i></td>
-                </tr>
-            </tbody>
-            <tbody v-else>
-                <tr v-for="num in 5">
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    
                 </tr>
             </tbody>
         </table>

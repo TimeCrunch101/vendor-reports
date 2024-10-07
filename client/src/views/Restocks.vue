@@ -9,11 +9,9 @@ const router = useRouter()
 const auth = useAuthStore()
 const token = ref(auth.getToken)
 const restockForms = ref(null)
-const loading = ref(true)
 const selectedMonth = ref('');
 const set = reactive({
-  restockForms,
-  loading
+  restockForms
 })
 
 const filteredRestockForms = computed(() => {
@@ -31,7 +29,6 @@ const getAllRestocks = () => {
     }
   }).then((res) => {
     set.restockForms = res.data.restockForms
-    set.loading = false
   }).catch((err) => {
     console.error(err.response.data)
   })
@@ -86,7 +83,7 @@ onMounted(() => {
             <th scope="col"></th>
           </tr>
         </thead>
-        <tbody v-if="loading === false">
+        <tbody>
           <tr v-for="form in filteredRestockForms" :key="form.id">
             <td>{{ form.item_name }}</td>
             <td><router-link :to="`/vendor/${form.vendor_id}`">{{ form.vendor_name }}</router-link></td>
@@ -94,30 +91,6 @@ onMounted(() => {
             <td>{{ form.date.split("T")[0] }}</td>
             <td>{{ form.isbn }}</td>
             <td><i @click="deleteRestockForm(form.id)" class="bi bi-trash3-fill"></i></td>
-          </tr>
-        </tbody>
-        <tbody v-else>
-          <tr v-for="num in 5" :key="num">
-            <td>
-              <p class="placeholder-glow">
-                <span class="placeholder col-12"></span>
-              </p>
-            </td>
-            <td>
-              <p class="placeholder-glow">
-                <span class="placeholder col-12"></span>
-              </p>
-            </td>
-            <td>
-              <p class="placeholder-glow">
-                <span class="placeholder col-12"></span>
-              </p>
-            </td>
-            <td>
-              <p class="placeholder-glow">
-                <span class="placeholder col-12"></span>
-              </p>
-            </td>
           </tr>
         </tbody>
       </table>

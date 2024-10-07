@@ -11,11 +11,9 @@ const auth = useAuthStore()
 const token = ref(auth.getToken)
 const vendor = ref(null)
 const itemList = ref(null)
-const loading = ref(true)
 const set = reactive({
   vendor,
-  itemList,
-  loading
+  itemList
 })
 
 const getItemList = () => {
@@ -25,7 +23,6 @@ const getItemList = () => {
         }
     }).then((res) => {
         set.itemList = res.data.itemList
-        set.loading = false
     }).catch((err) => {
         console.error(err.response.data)
     })
@@ -68,37 +65,13 @@ onMounted(() => {
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody v-if="loading === false">
+            <tbody>
                 <tr v-for="item in itemList">
                     <td>{{ item.item_name }}</td>
                     <td>${{ item.price }}</td>
                     <td>{{ item.qty }}</td>
                     <td>{{ item.isbn }}</td>
                     <td><i @click="deleteItem(item.id)" class="bi bi-trash3-fill"></i></td>
-                </tr>
-            </tbody>
-            <tbody v-else>
-                <tr v-for="num in 5">
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
                 </tr>
             </tbody>
         </table>

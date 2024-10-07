@@ -8,10 +8,8 @@ const auth = useAuthStore()
 const route = useRoute()
 const token = ref(auth.getToken)
 const sales = ref([])
-const loading = ref(true)
 const set = reactive({
-    sales,
-    loading
+    sales
 })
 
 
@@ -22,7 +20,6 @@ const getSales = () => {
         }
     }).then((res) => {
         set.sales = res.data.vendorSales
-        set.loading = false
     }).catch((err) => {
         console.error(err.response.data)
     })
@@ -55,15 +52,6 @@ onMounted(() => {
           <td><input type="number" name="qty_sold" id="qty_sold" v-model="sales[index].qty_sold"></td>
         </tr>
     </tbody>
-    <!-- <tfoot>
-        <tr>
-          <th scope="row"></th>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-    </tfoot> -->
     </table>
 </div>
 

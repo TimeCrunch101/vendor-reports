@@ -8,10 +8,8 @@ const auth = useAuthStore()
 const token = ref(auth.getToken)
 const route = useRoute()
 const restockForms = ref(null)
-const loading = ref(true)
 const set = reactive({
-    restockForms,
-    loading
+    restockForms
 })
 
 const getRestockForms = () => {
@@ -21,7 +19,6 @@ const getRestockForms = () => {
         }
     }).then((res) => {
         set.restockForms = res.data.restockForms
-        set.loading = false
     }).catch((err) => {
         console.error(err)
     })
@@ -57,38 +54,13 @@ onMounted(() => {
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody v-if="loading === false">
+            <tbody>
                 <tr v-for="form in restockForms">
                     <td>{{ form.item_name }}</td>
                     <td>{{ form.restock_qty }}</td>
                     <td>{{ form.date.split("T")[0] }}</td>
                     <td>{{ form.isbn }}</td>
                     <td><i @click="deleteRestockOrder(form.id)" class="bi bi-trash3-fill"></i></td>
-                </tr>
-            </tbody>
-            <tbody v-else>
-                <tr v-for="num in 5">
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="placeholder-glow">
-                            <span class="placeholder col-12"></span>
-                        </p>
-                    </td>
-                    
                 </tr>
             </tbody>
         </table>
