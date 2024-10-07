@@ -150,8 +150,6 @@ exports.getEOMReport = async (req, res) => {
         const restockReport = await DB.getRestocksByVendorAndCurrentDate(req.body.vendor_id)
         const newReport = await utils.prepareReport(restockReport)
 
-        console.log(newReport)
-
 
         res.status(200).json({
             restockReport: newReport
