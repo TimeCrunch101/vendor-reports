@@ -54,12 +54,12 @@ const getData = () => {
 onMounted(() => {
     getData()
 })
-
+console.log()
 </script>
 
 <template>
 
-
+<button v-if="route.fullPath !== '/eom/reports'" @click="getData()" class="btn btn-success mt-3"><i class="bi bi-arrow-clockwise"></i></button>
 
 
 
@@ -84,10 +84,10 @@ onMounted(() => {
         </tr>
     </thead>
     <tbody>
-        <tr v-for="(item, index) in tableData" :key="item.item_id">
-          <th v-if="index === 0" scope="row"> <router-link :to="`/vendor/${props.vendorID}`">{{ props.vendorName }}</router-link></th>
-          <th v-else></th>
-          <th>{{ item.item_name }}</th>
+        <tr v-for="(item, index) in tableData" :key="item.item_id" :class="{'table-danger' : (item.qty + item.restock_qty) < item.qty_sold}">
+          <td v-if="index === 0" scope="row"><router-link :to="`/vendor/${props.vendorID}`">{{ props.vendorName }}</router-link></td>
+          <td v-else></td>
+          <td>{{ item.item_name }}</td>
           <td>${{ item.price }}</td>
           <td>{{ item.qty }}</td>
           <td v-if="item.restock_qty !== null">{{ item.restock_qty}}</td>

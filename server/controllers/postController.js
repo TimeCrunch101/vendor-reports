@@ -166,3 +166,18 @@ exports.saveSalesForVendor = async (req, res) => {
         })
     }
 }
+
+exports.deleteSale = async (req, res) => {
+    try {
+        const dbRes = await DB.deleteSale(req.params.id)
+        res.status(200).json({
+            dbRes: dbRes
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}

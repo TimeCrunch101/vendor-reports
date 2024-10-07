@@ -448,3 +448,16 @@ exports.saveSalesForVendor = (sale, dateRange, vendor_id) => {
         })
     })
 }
+
+exports.deleteSale = (id) => {
+    return new Promise((resolve, reject) => {
+        DB.query("DELETE FROM sales WHERE id = ?",[id],(err, res) => {
+            try {
+                if (err) throw err;
+                resolve(res)
+            } catch (error) {
+                reject(error)
+            }
+        })    
+    })
+}
