@@ -1,5 +1,3 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
 name: Deploy Server
 
@@ -12,21 +10,48 @@ jobs:
 
     runs-on: self-hosted
 
-    strategy:
-      matrix:
-        node-version: [22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    #environment: production
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: 'package-lock.json'
-    #- run: pm2 stop 0
-    #- run: cd server && npm ci
-    #- run: pm2 start 0
-    #- run: npm run build --if-present
-    #- run: npm test
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Create ecosystem.config.js
+        run: |
+          echo "module.exports = {
+            apps: [
+              {
+                name: 'vendor-reports',
+                script: './server/main.js',
+                instances: 1,
+                autorestart: true,
+                watch: false,
+                max_memory_restart: '1G',
+                env: {
+                  NODE_ENV: 'development',
+                  DB_HOST: '${{ secrets.DB_HOST }}',
+                  DB_USER: '${{ secrets.DB_USER }}',
+                  DB_PASS: '${{ secrets.DB_PASS }}',
+                  DB_NAME: '${{ secrets.DB_NAME }}',
+                  DB_PORT: '${{ secrets.DB_PORT }}',
+                  JWT_SKEY: '${{ secrets.JWT_SKEY }}',
+                },
+                env_production: {
+                  NODE_ENV: 'production',
+                  DB_HOST: '${{ secrets.DB_HOST }}',
+                  DB_USER: '${{ secrets.DB_USER }}',
+                  DB_PASS: '${{ secrets.DB_PASS }}',
+                  DB_NAME: '${{ secrets.DB_NAME }}',
+                  DB_PORT: '${{ secrets.DB_PORT }}',
+                  JWT_SKEY: '${{ secrets.JWT_SKEY }}',
+                }
+              }
+            ]
+          };" > ecosystem.config.js
+
+      - name: Start application with PM2
+        run: pm2 start ecosystem.config.js --env production
+
+      - name: Save PM2 state
+        run: pm2 save
