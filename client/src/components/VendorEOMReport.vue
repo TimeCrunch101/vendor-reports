@@ -46,11 +46,102 @@ const getData = () => {
         }
     }).then((res) => {
         set.tableData = res.data.restockReport
-        console.log(tableData.value)
     }).catch((err) => {
         console.error(err)
     })
 }
+
+const calcTotalOH = computed(() => {
+    let TotalOHValue = 0
+    if (tableData.value) {
+        tableData.value.forEach(element => {
+            TotalOHValue = TotalOHValue += element.qty
+        });
+        return TotalOHValue
+    } else {
+        return 0
+    }
+    TotalOHValue = 0
+})
+
+const calcTotalRestock = computed(() => {
+    let TotalRestockValue = 0
+    if (tableData.value) {
+        tableData.value.forEach(element => {
+            if (element.restock_qty !== null) {
+                TotalRestockValue = TotalRestockValue += element.restock_qty
+            }
+        });
+        return TotalRestockValue
+    } else {
+        return 0
+    }
+    TotalRestockValue = 0
+})
+
+const calcTotalSold = computed(() => {
+    let totalSoldValue = 0
+    if (tableData.value) {
+        tableData.value.forEach(element => {
+            totalSoldValue = totalSoldValue += element.qty_sold
+        });
+        return totalSoldValue
+    } else {
+        return 0
+    }
+    totalSoldValue = 0
+})
+
+const calcTotalGross = computed(() => {
+    let totalGrossValue = 0
+    if (tableData.value) {
+        tableData.value.forEach(element => {
+            if (element.qty_sold > 0) {
+                const gross = parseFloat(element.price) * parseFloat(element.qty_sold)
+                totalGrossValue = totalGrossValue += gross
+            }
+        });
+        return formatToUSD(totalGrossValue)
+    } else {
+        return 0
+    }
+    totalGrossValue = 0
+})
+
+const calcTotalCon = computed(() => {
+    let totalConValue = 0
+    if (tableData.value) {
+        tableData.value.forEach(element => {
+            if (element.qty_sold > 0) {
+                const gross = parseFloat(element.price) * parseFloat(element.qty_sold)
+                const consignment = gross * parseFloat(element.consignment)
+                totalConValue = totalConValue += consignment
+            }
+        });
+        return formatToUSD(totalConValue)
+    } else {
+        return 0
+    }
+    totalConValue = 0
+})
+
+const calcTotalNet = computed(() => {
+    let totalNetValue = 0
+    if (tableData.value) {
+        tableData.value.forEach(element => {
+            if (element.qty_sold > 0) {
+                const gross = parseFloat(element.price) * parseFloat(element.qty_sold)
+                const consignment = gross * parseFloat(element.consignment)
+                const net = gross - consignment
+                totalNetValue = totalNetValue += net
+            }
+        });
+        return formatToUSD(totalNetValue)
+    } else {
+        return 0
+    }
+    totalNetValue = 0
+})
 
 onMounted(() => {
     getData()
@@ -83,7 +174,7 @@ onMounted(() => {
           <td v-if="index === 0" scope="row"><router-link :to="`/vendor/${props.vendorID}`">{{ props.vendorName }}</router-link></td>
           <td v-else></td>
           <td>{{ item.item_name }}</td>
-          <td>${{ item.price }}</td>
+          <td>{{ formatToUSD(item.price) }}</td>
           <td>{{ item.qty }}</td>
           <td v-if="item.restock_qty !== null">{{ item.restock_qty}}</td>
           <td v-else>0</td>
@@ -94,6 +185,20 @@ onMounted(() => {
           <td>{{ formatToUSD(((item.price * item.qty_sold) - ((item.price * item.qty_sold) * item.consignment))) }}</td>
         </tr>
     </tbody>
+    <br>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>TOTALS:</td>
+            <td>{{ calcTotalOH }}</td>
+            <td>{{ calcTotalRestock }}</td>
+            <td>{{ calcTotalSold }}</td>
+            <td>{{ calcTotalGross }}</td>
+            <td>{{ calcTotalCon }}</td>
+            <td>{{ calcTotalNet }}</td>
+        </tr>    
+    </tfoot>
     </table>
 </div>
 </template>
