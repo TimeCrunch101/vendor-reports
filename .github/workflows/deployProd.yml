@@ -1,4 +1,3 @@
-
 name: Deploy Server
 
 on:
@@ -6,10 +5,14 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
-    runs-on: self-hosted
+  deploy:
+    strategy:
+      matrix:
+        runner: [app01, app02, app03]
+      max-parallel: 1
+    runs-on: ${{ matrix.runner }}
     environment: production
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
