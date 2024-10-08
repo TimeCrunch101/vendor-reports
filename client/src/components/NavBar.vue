@@ -52,9 +52,6 @@ onMounted(() => {
           <router-link @click="getPath('/eom/reports')" class="nav-link" :class="{'active' : currentPath === '/eom/reports'}" aria-current="page" to="/eom/reports">EOM Reports</router-link>
         </li>
         <li class="nav-item">
-          <router-link @click="getPath('/eom/reports')" class="nav-link" :class="{'active' : currentPath === '/eom/reports'}" aria-current="page" to="/eom/reports">Test</router-link>
-        </li>
-        <li class="nav-item">
           <router-link @click="logout()" class="nav-link" to="/login">Logout <i class="bi bi-box-arrow-right"></i></router-link>
         </li>
       </ul>
