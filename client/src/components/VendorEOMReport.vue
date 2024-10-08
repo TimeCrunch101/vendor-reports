@@ -185,18 +185,15 @@ onMounted(() => {
           <td>{{ formatToUSD(((item.price * item.qty_sold) - ((item.price * item.qty_sold) * item.consignment))) }}</td>
         </tr>
     </tbody>
-    <br>
     <tfoot>
         <tr>
-            <td></td>
-            <td></td>
-            <td>TOTALS:</td>
-            <td>{{ calcTotalOH }}</td>
-            <td>{{ calcTotalRestock }}</td>
-            <td>{{ calcTotalSold }}</td>
-            <td>{{ calcTotalGross }}</td>
-            <td>{{ calcTotalCon }}</td>
-            <td>{{ calcTotalNet }}</td>
+            <td colspan="3" class="text-end"><strong>TOTALS:</strong></td>
+            <td><strong>{{ calcTotalOH }}</strong></td>
+            <td><strong>{{ calcTotalRestock }}</strong></td>
+            <td><strong>{{ calcTotalSold }}</strong></td>
+            <td><strong>{{ calcTotalGross }}</strong></td>
+            <td><strong>{{ calcTotalCon }}</strong></td>
+            <td><strong>{{ calcTotalNet }}</strong></td>
         </tr>    
     </tfoot>
     </table>
