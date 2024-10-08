@@ -32,8 +32,11 @@ exports.checkPassword = (receivedPassword, passwordFromDB) => {
         bcrypt.compare(receivedPassword, passwordFromDB, (err, result) => {
             try {
                 if (err) throw err;
-                if (!result) resolve(false)
-                resolve(true)
+                if (!result) {
+                    resolve(false)
+                } else {
+                    resolve(true)
+                }
             } catch (error) {
                 reject(error)
             }
