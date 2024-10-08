@@ -119,6 +119,7 @@ exports.submitRestockForm = async (req, res) => {
         for (let i = 0; i < req.body.restockForm.length; i++) {
             const itemRestock = req.body.restockForm[i];
             await DB.submitRestockForm(req.params.vendor_id, itemRestock)
+            await DB.updateQuantity(itemRestock.restockCount, itemRestock.id)
         }
         res.sendStatus(200)
     } catch (error) {

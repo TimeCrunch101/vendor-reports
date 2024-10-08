@@ -237,6 +237,19 @@ exports.submitRestockForm = (vendor_id, item) => {
     })
 }
 
+exports.updateQuantity = (id, newQty) => {
+    return new Promise((resolve, reject) => {
+        DB.query("UPDATE items SET qty = qty + ? WHERE id = ?",[id, newQty], (err, res) => {
+            try {
+                if (err) throw err;
+                resolve(res)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
 exports.getRestockFormsByVendor = (id) => {
     return new Promise((resolve, reject) => {
         DB.query(`

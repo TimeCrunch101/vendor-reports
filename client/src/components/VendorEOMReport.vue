@@ -46,6 +46,7 @@ const getData = () => {
         }
     }).then((res) => {
         set.tableData = res.data.restockReport
+        console.log(tableData.value)
     }).catch((err) => {
         console.error(err)
     })
@@ -54,18 +55,12 @@ const getData = () => {
 onMounted(() => {
     getData()
 })
-console.log()
+
 </script>
 
 <template>
 
 <button v-if="route.fullPath !== '/eom/reports'" @click="getData()" class="btn btn-success mt-3"><i class="bi bi-arrow-clockwise"></i></button>
-
-
-
-
-
-
 
 <div v-if="tableData?.length !== 0" class="table-responsive">
     <table class="table table-hover table-bordered table-striped table-sm">
@@ -101,17 +96,6 @@ console.log()
     </tbody>
     </table>
 </div>
-
-
-
-
-
-
-
-
-
-
-
 </template>
 
 <style scoped>
