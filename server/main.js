@@ -7,18 +7,18 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config()
   // require("./socket")
   const opts = require("./config/options.json")
   const express = require('express')
-  const rateLimit = require('express-rate-limit');
+  // const rateLimit = require('express-rate-limit');
   const initGetRouter = require('./routes/getRouter')
   const initPostRouter = require('./routes/postRouter')
   const cors = require('cors')
   const app = express()
   
-  const apiLimiter = rateLimit({
-    windowMs: opts.api_limits.window_ms,
-    max: opts.api_limits.max,
-    standardHeaders: true,
-    legacyHeaders: false,
-  })
+  // const apiLimiter = rateLimit({
+  //   windowMs: opts.api_limits.window_ms,
+  //   max: opts.api_limits.max,
+  //   standardHeaders: true,
+  //   legacyHeaders: false,
+  // })
   
   app.use(express.urlencoded({extended: false}))
   app.use(express.json())
@@ -32,11 +32,16 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config()
       origin: 'http://localhost:5173',
       credentials: true
     }))
+  } else {
+    app.use(cors({
+      origin: 'https://app.cincitechlabs.com',
+      credentials: true
+    }))
   }
   
-  if (process.env.NODE_ENV === 'production') {
-    app.use('/*', apiLimiter)
-  }
+  // if (process.env.NODE_ENV === 'production') {
+  //   app.use('/*', apiLimiter)
+  // }
   
   initGetRouter(app)
   initPostRouter(app)

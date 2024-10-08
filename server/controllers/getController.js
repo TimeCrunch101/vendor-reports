@@ -1,9 +1,8 @@
 const DB = require("./databaseController")
 const utils = require("../utils/validate")
 
-exports.secretRouteTest = async (req, res) => {
-    console.info(res.user)
-    res.send("SECRETE!!!")
+exports.alive = (req, res) => {
+    res.sendStatus(200)
 }
 
 exports.getVendors = async (req, res) => {

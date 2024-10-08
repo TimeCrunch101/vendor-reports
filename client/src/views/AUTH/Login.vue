@@ -25,9 +25,9 @@ const login = () => {
     })
 }
 
-const goRegister = () => {
-    router.push("/register")
-}
+// const goRegister = () => {
+//     router.push("/register")
+// }
 
 </script>
 
@@ -44,7 +44,7 @@ const goRegister = () => {
                 <label for="floatingPassword">Password</label>
             </div>
             <button class="btn btn-success mt-3" type="submit" style="margin-right: 3em;">Login</button>
-            <button @click="goRegister()" class="btn btn-primary mt-3" type="button">Register</button>
+            <!-- <button @click="goRegister()" class="btn btn-primary mt-3" type="button">Register</button> -->
         </div>
     </form>
 </template>

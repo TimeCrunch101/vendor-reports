@@ -11,20 +11,20 @@ const form = ref({
     password: null
 })
 
-const register = () => {
-    axios.post('/api/v1/register', {
-        first_name: form.value.first_name,
-        last_name: form.value.last_name,
-        email: form.value.email,
-        password: form.value.password
-    }).then((res) => {
-        form.value.password = null
-        router.push('/login')
-    }).catch((err) => {
-        console.error(err)
-        alert("COULD NOT REGISTER")
-    })
-}
+// const register = () => {
+//     axios.post('/api/v1/register', {
+//         first_name: form.value.first_name,
+//         last_name: form.value.last_name,
+//         email: form.value.email,
+//         password: form.value.password
+//     }).then((res) => {
+//         form.value.password = null
+//         router.push('/login')
+//     }).catch((err) => {
+//         console.error(err)
+//         alert("COULD NOT REGISTER")
+//     })
+// }
 
 const goLogin = () => {
     router.push("/login")
@@ -33,7 +33,7 @@ const goLogin = () => {
 </script>
 
 <template>
-    <form @submit.prevent="register()">
+    <!-- <form @submit.prevent="register()">
         <div class="container mt-5">
             <h3 class="text-center">REGISTER</h3>
             <div class="form-floating mb-2">
@@ -55,7 +55,7 @@ const goLogin = () => {
             <button class="btn btn-success mt-3" type="submit" style="margin-right: 3em;">Submit</button>
             <button @click="goLogin()" class="btn btn-primary mt-3" type="button">To Login</button>
         </div>
-    </form>
+    </form> -->
 </template>
 
 <style scoped>
