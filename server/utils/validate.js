@@ -62,17 +62,54 @@ exports.checkUserFields = (user) => {
     })
 }
 
+// exports.prepareReport = (report) => {
+//     return new Promise((resolve, reject) => {
+//         const itemMap = new Map();
+//         report.forEach(item => {
+//           const existingItem = itemMap.get(item.item_id);
+//           if (existingItem) {
+//             existingItem.restock_qty += item.restock_qty ?? 0;
+//           } else {
+//             itemMap.set(item.item_id, { ...item });
+//           }
+//         });
+//         resolve(Array.from(itemMap.values()))
+//     })
+// }
+
 exports.prepareReport = (report) => {
     return new Promise((resolve, reject) => {
-        const itemMap = new Map();
-        report.forEach(item => {
-          const existingItem = itemMap.get(item.item_id);
-          if (existingItem) {
-            existingItem.restock_qty += item.restock_qty ?? 0;
-          } else {
-            itemMap.set(item.item_id, { ...item });
-          }
-        });
-        resolve(Array.from(itemMap.values()))
-    })
-}
+        try {
+            const itemMap = new Map();
+            report.forEach(item => {
+                const existingItem = itemMap.get(item.item_id);
+                if (existingItem) {
+                    if (!existingItem.sales_ids.has(item.sales_id)) {
+                        existingItem.qty_sold += item.qty_sold ?? 0;
+                        existingItem.sales_ids.add(item.sales_id);
+                    }
+                    if (!existingItem.restock_ids.has(item.restock_id)) {
+                        existingItem.restock_qty += item.restock_qty ?? 0;
+                        existingItem.restock_ids.add(item.restock_id);
+                    }
+                } else {
+                    itemMap.set(item.item_id, {
+                        ...item,
+                        qty_sold: item.qty_sold ?? 0,
+                        restock_qty: item.restock_qty ?? 0,
+                        sales_ids: new Set([item.sales_id]),
+                        restock_ids: new Set([item.restock_id])
+                    });
+                }
+            });
+            const result = Array.from(itemMap.values()).map(item => {
+                delete item.sales_ids;
+                delete item.restock_ids;
+                return item;
+            });
+            resolve(result);
+        } catch (error) {
+            reject("An unknown error has prevented the creation of the EOM Report")
+        }
+    });
+};

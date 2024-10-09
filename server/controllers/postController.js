@@ -119,7 +119,7 @@ exports.submitRestockForm = async (req, res) => {
         for (let i = 0; i < req.body.restockForm.length; i++) {
             const itemRestock = req.body.restockForm[i];
             await DB.submitRestockForm(req.params.vendor_id, itemRestock)
-            await DB.updateQuantity(itemRestock.restockCount, itemRestock.id)
+            await DB.updateQuantity(itemRestock.restockCount, itemRestock.id, "add")
         }
         res.sendStatus(200)
     } catch (error) {
@@ -153,6 +153,7 @@ exports.saveSalesForVendor = async (req, res) => {
             const sale = req.body.sales[i];
             if (sale.qty_sold !== 0) {
                 const dbRes = await DB.saveSalesForVendor(sale, req.body.dateRange, req.params.vendor_id)
+                await DB.updateQuantity(sale.id, sale.qty_sold, "remove")
                 responses.push(dbRes)
             }
         }
@@ -173,6 +174,30 @@ exports.deleteSale = async (req, res) => {
         const dbRes = await DB.deleteSale(req.params.id)
         res.status(200).json({
             dbRes: dbRes
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(400).json({
+            message: error.message,
+            cause: error.cause
+        })
+    }
+}
+
+exports.updateQtyOH = async (req, res) => {
+    try {
+        const itemList = req.body.itemsList
+        if (itemList.length === 0) {
+            throw new Error("No Item List provided", {cause: "the vendor doesn't have any items"})
+        }
+        let responses = []
+        for (let i = 0; i < itemList.length; i++) {
+            const item = itemList[i];
+            const dbRes = await DB.updateQuantity(item.id, item.qty, "set")
+            responses.push(dbRes)
+        }
+        res.status(200).json({
+            dbRes: responses
         })
     } catch (error) {
         console.error(error)

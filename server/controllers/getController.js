@@ -146,14 +146,11 @@ exports.getAllRestockForms = async (req, res) => {
 
 exports.getEOMReport = async (req, res) => {
     try {
-        const restockReport = await DB.getRestocksByVendorAndCurrentDate(req.body.vendor_id)
+        const restockReport = await DB.getRestocksByVendorAndCurrentDate(req.body.vendor_id, req.body.currentMonth)
         const newReport = await utils.prepareReport(restockReport)
-
-
         res.status(200).json({
             restockReport: newReport
         })
-        
     } catch (error) {
         console.error(error)
         res.status(400).json({
