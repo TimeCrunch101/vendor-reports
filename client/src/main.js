@@ -2,6 +2,7 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Chart } from 'chart.js/auto';
 
 // Chart.defaults.backgroundColor = '#9BD0F5';

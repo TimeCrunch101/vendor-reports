@@ -237,16 +237,36 @@ exports.submitRestockForm = (vendor_id, item) => {
     })
 }
 
-exports.updateQuantity = (id, newQty) => {
+exports.updateQuantity = (id, newQty, addOrRemove) => {
     return new Promise((resolve, reject) => {
-        DB.query("UPDATE items SET qty = qty + ? WHERE id = ?",[id, newQty], (err, res) => {
-            try {
-                if (err) throw err;
-                resolve(res)
-            } catch (error) {
-                reject(error)
-            }
-        })
+        if (addOrRemove === "add") {
+            DB.query("UPDATE items SET qty = qty + ? WHERE id = ?",[id, newQty], (err, res) => {
+                try {
+                    if (err) throw err;
+                    resolve(res)
+                } catch (error) {
+                    reject(error)
+                }
+            })
+        } else if (addOrRemove === "remove") {
+            DB.query("UPDATE items SET qty = qty - ? WHERE id = ?",[newQty, id], (err, res) => {
+                try {
+                    if (err) throw err;
+                    resolve(res)
+                } catch (error) {
+                    reject(error)
+                }
+            })
+        } else if (addOrRemove === "set") {
+            DB.query("UPDATE items SET qty = ? WHERE id = ?",[newQty, id], (err, res) => {
+                try {
+                    if (err) throw err;
+                    resolve(res)
+                } catch (error) {
+                    reject(error)
+                }
+            })
+        }
     })
 }
 
