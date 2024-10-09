@@ -341,7 +341,7 @@ exports.deleteRestockOrder = (id) => {
     })
 }
 
-exports.getRestocksByVendorAndCurrentDate = (vendor_id) => {
+exports.getRestocksByVendorAndCurrentDate = (vendor_id, currentMonth) => {
     return new Promise((resolve, reject) => {
         DB.query(`
             SELECT
@@ -355,21 +355,25 @@ exports.getRestocksByVendorAndCurrentDate = (vendor_id) => {
                 items.isbn,
                 restocks.id AS restock_id,
                 restocks.restock_qty,
+                restocks.date AS restock_date,
                 sales.id AS sales_id,
                 sales.qty_sold,
                 sales.start_date,
-                sales.end_date,
-                restocks.date AS restock_date
+                sales.end_date
             FROM
                 items
                 LEFT JOIN restocks ON items.id = restocks.item
-                LEFT JOIN vendors ON items.vendor = vendors.id
+                    AND (restocks.date LIKE ? OR restocks.date IS NULL)
                 LEFT JOIN sales ON items.id = sales.item_id
-                WHERE items.vendor = ? 
+                    AND (sales.start_date LIKE ? OR sales.start_date IS NULL)
+                LEFT JOIN vendors ON items.vendor = vendors.id
+            WHERE
+                items.vendor = ?
                 
-            `,[vendor_id], (err, data) => {
+            `,[`%${currentMonth}%`, `%${currentMonth}%`, vendor_id], (err, data) => {
                 try {
                     if (err) throw err;
+                    console.log(data)
                     resolve(data)
                 } catch (error) {
                     reject(error)

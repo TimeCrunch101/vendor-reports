@@ -12,8 +12,10 @@ const auth = useAuthStore()
 const route = useRoute()
 const token = ref(auth.getToken)
 const tableData = ref(null)
+const currentMonth = ref(null)
 const set = reactive({
-    tableData
+    tableData,
+    currentMonth
 })
 
 const formatToUSD = (amount) => {
@@ -35,11 +37,10 @@ const getFirstAndLastDayOfMonth = () => {
 };
 
 const getData = () => {
-    // const { firstDay, lastDay } = getFirstAndLastDayOfMonth();
-    // const currentMonth = `${firstDay.split("-")[0]}-${firstDay.split("-")[1]}`
+    
     axios.post("/api/v1/get/vendor/eom-report", {
         vendor_id: props.vendorID,
-        // currentMonth: currentMonth
+        currentMonth: currentMonth.value
     }, {
         headers: {
             Authorization: `Bearer ${token.value}`
@@ -144,6 +145,8 @@ const calcTotalNet = computed(() => {
 })
 
 onMounted(() => {
+    const { firstDay, lastDay } = getFirstAndLastDayOfMonth();
+    set.currentMonth = `${firstDay.split("-")[0]}-${firstDay.split("-")[1]}`
     getData()
 })
 
