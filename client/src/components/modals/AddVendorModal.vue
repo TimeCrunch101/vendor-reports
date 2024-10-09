@@ -7,7 +7,7 @@ const auth = useAuthStore()
 const token = ref(auth.getToken)
 const form = ref({
   name: null,
-  consignment: null,
+  consignment: 0.30,
   bm_ven_code: null
 })
 
