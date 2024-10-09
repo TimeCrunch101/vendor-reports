@@ -100,8 +100,14 @@ const showEdit = (status) => {
                 <tr v-for="(item, index) in itemList" :id="item.id">
                     <td>{{ item.item_name }}</td>
                     <td>${{ item.price }}</td>
-                    <td v-if="!edit.status">{{ item.qty }} <i @click="showEdit(true)" class="bi bi-pencil-square"></i></td>
-                    <td v-else><input type="number" step="1" name="qty" :id="`qty-${item.id}`" v-model="itemList[index].qty"> <i @click="showEdit(false)" class="bi bi-x-circle"></i> <i @click="updateQtyOH()" class="bi bi-check-circle"></i></td>
+                    <td v-if="!edit.status">
+                        {{ item.qty }} <i @click="showEdit(true)" class="bi bi-pencil-square"></i>
+                    </td>
+                    <td class="d-flex gap-1" v-else>
+                        <input style="max-width: 70px;" class="form-control form-control-sm" type="number" step="1" name="qty" :id="`qty-${item.id}`" v-model="itemList[index].qty">
+                        <i @click="showEdit(false)" class="bi bi-x-circle"></i>
+                        <i @click="updateQtyOH()" class="bi bi-check-circle"></i>
+                    </td>
                     <td>{{ item.isbn }}</td>
                     <td><i @click="deleteItem(item.id)" class="bi bi-trash3-fill"></i></td>
                 </tr>
