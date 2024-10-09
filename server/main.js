@@ -11,6 +11,7 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config()
   const initGetRouter = require('./routes/getRouter')
   const initPostRouter = require('./routes/postRouter')
   const cors = require('cors')
+  const path = require("path")
   const app = express()
   
   // const apiLimiter = rateLimit({
@@ -46,11 +47,20 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config()
   initGetRouter(app)
   initPostRouter(app)
   
+    // JSON response for a 404 error
+  // app.use((req, res) => {
+  //   res.status(404).json({ error: 'Resource not found' });
+  // });
+
+  
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(__dirname + '/public'))
-    app.get(/.*/, (req, res) => {
-      res.sendFile(__dirname + '/public/index.html')
-    })
+    // Serve static files from the 'public' directory
+    app.use(express.static(path.join(__dirname, 'public')));
+  
+    // Catch all routes and serve 'index.html' for SPA routing
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    });
   }
   
   app.listen(8080, console.info(`API: http://localhost:8080`))

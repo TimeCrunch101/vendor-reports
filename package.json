@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "api": "nodemon ./server/main.js",
-    "vue": "cd client && npm run dev"
+    "vue": "cd client && npm run dev",
+    "build": "cd client && npm run build"
   },
   "repository": {
     "type": "git",
