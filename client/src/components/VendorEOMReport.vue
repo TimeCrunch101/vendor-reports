@@ -8,11 +8,22 @@ const props = defineProps({
     vendorName: String,
     vendorID: String
 })
+const generateDateOptions = () => {
+    const options = [];
+    const currentDate = new Date();
+    for (let i = 0; i < 12; i++) {
+        const date = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+        options.push(date.toISOString().slice(0, 7)); // Format as YYYY-MM
+    }
+    return options;
+}
 const auth = useAuthStore()
 const route = useRoute()
 const token = ref(auth.getToken)
 const tableData = ref(null)
 const currentMonth = ref(null)
+const dateOptions = ref(generateDateOptions()); // Populate with date options
+const selectedDate = ref('');
 const set = reactive({
     tableData,
     currentMonth
@@ -37,7 +48,6 @@ const getFirstAndLastDayOfMonth = () => {
 };
 
 const getData = () => {
-    
     axios.post("/api/v1/get/vendor/eom-report", {
         vendor_id: props.vendorID,
         currentMonth: currentMonth.value
@@ -144,6 +154,11 @@ const calcTotalNet = computed(() => {
     totalNetValue = 0
 })
 
+const onDateChange = () => {
+    set.currentMonth = selectedDate.value
+    getData();
+}
+
 onMounted(() => {
     const { firstDay, lastDay } = getFirstAndLastDayOfMonth();
     set.currentMonth = `${firstDay.split("-")[0]}-${firstDay.split("-")[1]}`
@@ -155,6 +170,14 @@ onMounted(() => {
 <template>
 
 <button v-if="route.fullPath !== '/eom/reports'" @click="getData()" class="btn btn-success mt-3"><i class="bi bi-arrow-clockwise"></i></button>
+
+<div class="mb-3 d-flex">
+    <select id="date-select" v-model="selectedDate" @change="onDateChange" class="form-select w-auto" placeholder="Select Date">
+        <option v-for="date in dateOptions" :key="date" :value="date">
+            {{ date }}
+        </option>
+    </select>
+</div>
 
 <div v-if="tableData?.length !== 0" class="table-responsive">
     <table class="table table-hover table-bordered table-striped table-sm">
