@@ -9,7 +9,7 @@
         "max": 700
     },
     "jwt_expire_time": {
-        "value": "8h",
+        "value": "14 days",
         "description": "This is when the JWT will expire"
     }
 }
