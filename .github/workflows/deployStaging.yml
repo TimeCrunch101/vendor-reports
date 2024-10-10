@@ -8,7 +8,7 @@ jobs:
   deploy:
     strategy:
       matrix:
-        runner: [app02]
+        runner: [dev]
       max-parallel: 1
     runs-on: ${{ matrix.runner }}
     environment: production
