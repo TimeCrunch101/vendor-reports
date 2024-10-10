@@ -2,20 +2,26 @@ name: Deploy Server
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "cicd-test" ]
 
 jobs:
   deploy:
     strategy:
       matrix:
-        runner: [app01, app02, app03]
+        runner: [dev]
       max-parallel: 1
     runs-on: ${{ matrix.runner }}
-    environment: production
+    environment: development
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Stop PM2
+        run: pm2 stop 0
+
+      - name: Delete Old PM2
+        run: pm2 delete 0
 
       - name: Install Server Dependencies
         run: npm ci
